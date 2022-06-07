@@ -24,12 +24,7 @@ export interface PageProps {
 
 export function PageComponent({ page }: PageProps) {
     const router = useRouter();
-   const refreshData = () => {
-    router.replace(router.asPath);
-  }
-  useEffect(() => {
-     refreshData()
-  }, [])
+   
   const { useQuery, usePage } = client;
   const menuItems  = useQuery();
   const generalSettings = useQuery().generalSettings;
