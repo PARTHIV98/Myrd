@@ -22,11 +22,10 @@ export interface PageProps {
 
 export function PageComponent({ page }: PageProps) {
   const { useQuery, usePage } = client;
-  const { menuItems } = client.useQuery();
+  const menuItems  = useQuery();
   const generalSettings = useQuery().generalSettings;
   const CareerFormId = useQuery().themeGeneralSettings?.generalThemeSettings?.careersFormId;
   const LayoutOptions = page.fieldLayoutOptions.flexibleLayouts;
-console.log(client);
   return (
     <>
       <Header
