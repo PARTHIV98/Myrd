@@ -11,7 +11,7 @@ module.exports = withFaust({
   },
   trailingSlash: true,
   images: {
-    domains: ["myriadsolutionz.com", "localhost", "http://localhost/myriadsolutionz", "https://myriadsolutionz.vercel.app"],
+    domains: ["myriadsolutionz.com", "localhost", "http://localhost/myriadsolutionz", "https://myriadsolutionz.vercel.app","https://codywebz.com/myriadsolutionz"],
     minimumCacheTTL: 60,
     layoutRaw: true,
   },
