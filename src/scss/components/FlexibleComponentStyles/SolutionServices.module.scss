@@ -1,0 +1,76 @@
+@import "scss/variables";
+
+.solutionservicessection {
+  background-color: #f0eded;
+  .soltuionheading {
+    width: 25%;
+    @media screen and (max-width: 767px) {
+      width: 100%;
+    }
+  }
+  .solutionservice {
+    width: 75%;
+
+    .servicebox {
+      padding: 20px 15px 50px 15px;
+      border-radius: 5px;
+      background: #fff;
+      box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
+      -ms-box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
+      -webkit-box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
+      -o-box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
+      -moz-box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
+      float: left;
+      width: 100%;
+      overflow: hidden;
+      position: relative;
+      height: 100%;
+      * {
+        position: relative;
+      }
+      i {
+        font-size: 60px;
+        margin-bottom: 15px;
+        display: block;
+        background: -webkit-linear-gradient(#48c6ef 0%, #6f86d6 100%);
+        background: -o-linear-gradient(#48c6ef 0%, #6f86d6 100%);
+        background: linear-gradient(#48c6ef 0%, #6f86d6 100%);
+        background-clip: border-box;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      .h4 {
+        font-size: 16px;
+        font-weight: 500;
+        margin: 0 0 15px 0;
+        color: #2b2b2b;
+      }
+      .fixeddesc {
+        margin: 0;
+        font-size: 14px;
+        line-height: 30px;
+        color: #868383;
+        p {
+          display: -webkit-box;
+          -webkit-line-clamp: 6;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+      }
+      .arrowlink {
+        position: absolute;
+        bottom: 12px;
+        i {
+          font-size: 30px;
+          display: block;
+          color: #d9d9d9;
+          margin: 10px 0 0 0;
+        }
+      }
+    }
+    @media screen and (max-width: 767px) {
+      width: 100%;
+    }
+  }
+}
