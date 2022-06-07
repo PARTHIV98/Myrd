@@ -19,7 +19,7 @@ function ContentWithSidebar({ QueryData,menuData }: Props): JSX.Element {
   const bgColor = QueryData?.layoutColorOption;
   const blockContent = QueryData?.blockContent;
 
-  const { menuItems } = menuData;
+  const  {menuItems} = menuData;
   const router = useRouter();
   const os_links = menuItems({
     where: { location: MenuLocationEnum.OUR_SERVICES },
