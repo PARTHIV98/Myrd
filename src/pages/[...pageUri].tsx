@@ -15,12 +15,20 @@ import {
 import { GetStaticPropsContext } from "next";
 import Head from "next/head";
 import { client, Page as PageType } from "client";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 
 export interface PageProps {
   page: PageType | PageType["preview"]["node"] | null | undefined;
 }
 
 export function PageComponent({ page }: PageProps) {
+   const refreshData = () => {
+    router.replace(router.asPath);
+  }
+  useEffect(() => {
+     refreshData()
+  }, [])
   const { useQuery, usePage } = client;
   const menuItems  = useQuery();
   const generalSettings = useQuery().generalSettings;
