@@ -23,7 +23,7 @@ console.log(movie);
 
 
   const generalSettings = useQuery().generalSettings;
-  const LayoutOptions = movie.fieldLayoutOptions.flexibleLayouts;
+  const LayoutOptions = movie?.fieldLayoutOptions?.flexibleLayouts;
 
   return (
     <>
