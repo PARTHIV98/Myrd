@@ -380,6 +380,8 @@ export enum ContentTypeEnum {
   PORTFOLIO = "PORTFOLIO",
   /** The Type of Content object */
   POST = "POST",
+  /** The Type of Content object */
+  SERVICES = "SERVICES",
 }
 
 /** The Type of Identifier used to fetch a single Content Type node. To be used along with the "id" field. Default is "ID". */
@@ -642,6 +644,26 @@ export interface CreatePostInput {
   toPing?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
 }
 
+/** Input for the createService mutation */
+export interface CreateServiceInput {
+  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: InputMaybe<Scalars["String"]>;
+  /** The content of the object */
+  content?: InputMaybe<Scalars["String"]>;
+  /** The date of the object. Preferable to enter as year/month/day (e.g. 01/31/2017) as it will rearrange date as fit if it is not specified. Incomplete dates may have unintended results for example, "2017" as the input will use current date with timestamp 20:17  */
+  date?: InputMaybe<Scalars["String"]>;
+  /** A field used for ordering posts. This is typically used with nav menu items or for special ordering of hierarchical content types. */
+  menuOrder?: InputMaybe<Scalars["Int"]>;
+  /** The password used to protect the content of the object */
+  password?: InputMaybe<Scalars["String"]>;
+  /** The slug of the object */
+  slug?: InputMaybe<Scalars["String"]>;
+  /** The status of the object */
+  status?: InputMaybe<PostStatusEnum>;
+  /** The title of the object */
+  title?: InputMaybe<Scalars["String"]>;
+}
+
 /** Input for the createTag mutation */
 export interface CreateTagInput {
   /** The slug that the post_tag will be an alias of */
@@ -807,6 +829,16 @@ export interface DeletePostInput {
   /** Whether the object should be force deleted instead of being moved to the trash */
   forceDelete?: InputMaybe<Scalars["Boolean"]>;
   /** The ID of the post to delete */
+  id: Scalars["ID"];
+}
+
+/** Input for the deleteService mutation */
+export interface DeleteServiceInput {
+  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: InputMaybe<Scalars["String"]>;
+  /** Whether the object should be force deleted instead of being moved to the trash */
+  forceDelete?: InputMaybe<Scalars["Boolean"]>;
+  /** The ID of the Service to delete */
   id: Scalars["ID"];
 }
 
@@ -2734,6 +2766,44 @@ export interface RootQueryToPostFormatConnectionWhereArgs {
   updateTermMetaCache?: InputMaybe<Scalars["Boolean"]>;
 }
 
+/** Arguments for filtering the RootQueryToServiceConnection connection */
+export interface RootQueryToServiceConnectionWhereArgs {
+  /** Filter the connection based on dates */
+  dateQuery?: InputMaybe<DateQueryInput>;
+  /** True for objects with passwords; False for objects without passwords; null for all objects with or without passwords */
+  hasPassword?: InputMaybe<Scalars["Boolean"]>;
+  /** Specific ID of the object */
+  id?: InputMaybe<Scalars["Int"]>;
+  /** Array of IDs for the objects to retrieve */
+  in?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Get objects with a specific mimeType property */
+  mimeType?: InputMaybe<MimeTypeEnum>;
+  /** Slug / post_name of the object */
+  name?: InputMaybe<Scalars["String"]>;
+  /** Specify objects to retrieve. Use slugs */
+  nameIn?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
+  notIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** What paramater to use to order the objects by. */
+  orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
+  /** Use ID to return only children. Use 0 to return only top-level items */
+  parent?: InputMaybe<Scalars["ID"]>;
+  /** Specify objects whose parent is in an array */
+  parentIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Specify posts whose parent is not in an array */
+  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Show posts with a specific password. */
+  password?: InputMaybe<Scalars["String"]>;
+  /** Show Posts based on a keyword search */
+  search?: InputMaybe<Scalars["String"]>;
+  /** Retrieve posts where post status is in an array. */
+  stati?: InputMaybe<Array<InputMaybe<PostStatusEnum>>>;
+  /** Show posts with a specific status. */
+  status?: InputMaybe<PostStatusEnum>;
+  /** Title of the object */
+  title?: InputMaybe<Scalars["String"]>;
+}
+
 /** Arguments for filtering the RootQueryToTagConnection connection */
 export interface RootQueryToTagConnectionWhereArgs {
   /** Unique cache key to be produced when this query is stored in an object cache. Default is 'core'. */
@@ -2866,6 +2936,18 @@ export interface SendPasswordResetEmailInput {
   clientMutationId?: InputMaybe<Scalars["String"]>;
   /** A string that contains the user's username or email address. */
   username: Scalars["String"];
+}
+
+/** The Type of Identifier used to fetch a single resource. Default is ID. */
+export enum ServiceIdType {
+  /** Identify a resource by the Database ID. */
+  DATABASE_ID = "DATABASE_ID",
+  /** Identify a resource by the (hashed) Global ID. */
+  ID = "ID",
+  /** Identify a resource by the slug. Available to non-hierarchcial Types where the slug is a unique identifier. */
+  SLUG = "SLUG",
+  /** Identify a resource by the URI. */
+  URI = "URI",
 }
 
 /** The Type of Identifier used to fetch a single resource. Default is ID. */
@@ -3242,6 +3324,28 @@ export interface UpdatePostInput {
   title?: InputMaybe<Scalars["String"]>;
   /** URLs queued to be pinged. */
   toPing?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+}
+
+/** Input for the updateService mutation */
+export interface UpdateServiceInput {
+  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: InputMaybe<Scalars["String"]>;
+  /** The content of the object */
+  content?: InputMaybe<Scalars["String"]>;
+  /** The date of the object. Preferable to enter as year/month/day (e.g. 01/31/2017) as it will rearrange date as fit if it is not specified. Incomplete dates may have unintended results for example, "2017" as the input will use current date with timestamp 20:17  */
+  date?: InputMaybe<Scalars["String"]>;
+  /** The ID of the Service object */
+  id: Scalars["ID"];
+  /** A field used for ordering posts. This is typically used with nav menu items or for special ordering of hierarchical content types. */
+  menuOrder?: InputMaybe<Scalars["Int"]>;
+  /** The password used to protect the content of the object */
+  password?: InputMaybe<Scalars["String"]>;
+  /** The slug of the object */
+  slug?: InputMaybe<Scalars["String"]>;
+  /** The status of the object */
+  status?: InputMaybe<PostStatusEnum>;
+  /** The title of the object */
+  title?: InputMaybe<Scalars["String"]>;
 }
 
 /** Input for the updateSettings mutation */
@@ -3701,6 +3805,7 @@ export const scalarsEnumsHash: import("gqty").ScalarsEnumsHash = {
   PostObjectsConnectionOrderbyEnum: true,
   PostStatusEnum: true,
   RelationEnum: true,
+  ServiceIdType: true,
   String: true,
   TagIdType: true,
   TaxonomyEnum: true,
@@ -4404,6 +4509,21 @@ export const generatedSchema = {
     clientMutationId: { __type: "String" },
     post: { __type: "Post" },
   },
+  CreateServiceInput: {
+    clientMutationId: { __type: "String" },
+    content: { __type: "String" },
+    date: { __type: "String" },
+    menuOrder: { __type: "Int" },
+    password: { __type: "String" },
+    slug: { __type: "String" },
+    status: { __type: "PostStatusEnum" },
+    title: { __type: "String" },
+  },
+  CreateServicePayload: {
+    __typename: { __type: "String!" },
+    clientMutationId: { __type: "String" },
+    service: { __type: "Service" },
+  },
   CreateTagInput: {
     aliasOf: { __type: "String" },
     clientMutationId: { __type: "String" },
@@ -4554,6 +4674,17 @@ export const generatedSchema = {
     clientMutationId: { __type: "String" },
     deletedId: { __type: "ID" },
     post: { __type: "Post" },
+  },
+  DeleteServiceInput: {
+    clientMutationId: { __type: "String" },
+    forceDelete: { __type: "Boolean" },
+    id: { __type: "ID!" },
+  },
+  DeleteServicePayload: {
+    __typename: { __type: "String!" },
+    clientMutationId: { __type: "String" },
+    deletedId: { __type: "ID" },
+    service: { __type: "Service" },
   },
   DeleteTagInput: {
     clientMutationId: { __type: "String" },
@@ -6884,6 +7015,36 @@ export const generatedSchema = {
     termTaxonomId: { __type: "[ID]" },
     updateTermMetaCache: { __type: "Boolean" },
   },
+  RootQueryToServiceConnection: {
+    __typename: { __type: "String!" },
+    edges: { __type: "[RootQueryToServiceConnectionEdge]" },
+    nodes: { __type: "[Service]" },
+    pageInfo: { __type: "WPPageInfo" },
+  },
+  RootQueryToServiceConnectionEdge: {
+    __typename: { __type: "String!" },
+    cursor: { __type: "String" },
+    node: { __type: "Service" },
+  },
+  RootQueryToServiceConnectionWhereArgs: {
+    dateQuery: { __type: "DateQueryInput" },
+    hasPassword: { __type: "Boolean" },
+    id: { __type: "Int" },
+    in: { __type: "[ID]" },
+    mimeType: { __type: "MimeTypeEnum" },
+    name: { __type: "String" },
+    nameIn: { __type: "[String]" },
+    notIn: { __type: "[ID]" },
+    orderby: { __type: "[PostObjectsConnectionOrderbyInput]" },
+    parent: { __type: "ID" },
+    parentIn: { __type: "[ID]" },
+    parentNotIn: { __type: "[ID]" },
+    password: { __type: "String" },
+    search: { __type: "String" },
+    stati: { __type: "[PostStatusEnum]" },
+    status: { __type: "PostStatusEnum" },
+    title: { __type: "String" },
+  },
   RootQueryToTagConnection: {
     __typename: { __type: "String!" },
     edges: { __type: "[RootQueryToTagConnectionEdge]" },
@@ -7020,6 +7181,331 @@ export const generatedSchema = {
     __typename: { __type: "String!" },
     clientMutationId: { __type: "String" },
     user: { __type: "User" },
+  },
+  Service: {
+    __typename: { __type: "String!" },
+    conditionalTags: { __type: "ConditionalTags" },
+    content: {
+      __type: "String",
+      __args: { format: "PostObjectFieldFormatEnum" },
+    },
+    contentType: { __type: "ContentNodeToContentTypeConnectionEdge" },
+    contentTypeName: { __type: "String!" },
+    databaseId: { __type: "Int!" },
+    date: { __type: "String" },
+    dateGmt: { __type: "String" },
+    desiredSlug: { __type: "String" },
+    editingLockedBy: { __type: "ContentNodeToEditLockConnectionEdge" },
+    enclosure: { __type: "String" },
+    enqueuedScripts: {
+      __type: "ContentNodeToEnqueuedScriptConnection",
+      __args: { after: "String", before: "String", first: "Int", last: "Int" },
+    },
+    enqueuedStylesheets: {
+      __type: "ContentNodeToEnqueuedStylesheetConnection",
+      __args: { after: "String", before: "String", first: "Int", last: "Int" },
+    },
+    featuredImage: { __type: "NodeWithFeaturedImageToMediaItemConnectionEdge" },
+    featuredImageDatabaseId: { __type: "Int" },
+    featuredImageId: { __type: "ID" },
+    fieldLayoutOptions: { __type: "Service_Fieldlayoutoptions" },
+    guid: { __type: "String" },
+    id: { __type: "ID!" },
+    isContentNode: { __type: "Boolean!" },
+    isPreview: { __type: "Boolean" },
+    isRestricted: { __type: "Boolean" },
+    isTermNode: { __type: "Boolean!" },
+    lastEditedBy: { __type: "ContentNodeToEditLastConnectionEdge" },
+    link: { __type: "String" },
+    modified: { __type: "String" },
+    modifiedGmt: { __type: "String" },
+    preview: { __type: "ServiceToPreviewConnectionEdge" },
+    previewRevisionDatabaseId: { __type: "Int" },
+    previewRevisionId: { __type: "ID" },
+    serviceId: { __type: "Int!" },
+    slug: { __type: "String" },
+    status: { __type: "String" },
+    template: { __type: "ContentTemplate" },
+    templates: { __type: "[String]" },
+    title: {
+      __type: "String",
+      __args: { format: "PostObjectFieldFormatEnum" },
+    },
+    uri: { __type: "String" },
+  },
+  ServiceToPreviewConnectionEdge: {
+    __typename: { __type: "String!" },
+    node: { __type: "Service" },
+  },
+  Service_Fieldlayoutoptions: {
+    __typename: { __type: "String!" },
+    fieldGroupName: { __type: "String" },
+    flexibleLayouts: { __type: "[Service_Fieldlayoutoptions_FlexibleLayouts]" },
+  },
+  Service_Fieldlayoutoptions_FlexibleLayouts: {
+    __typename: { __type: "String!" },
+    $on: { __type: "$Service_Fieldlayoutoptions_FlexibleLayouts!" },
+  },
+  Service_Fieldlayoutoptions_FlexibleLayouts_AboutInfo: {
+    __typename: { __type: "String!" },
+    blockBackgroundImage: { __type: "MediaItem" },
+    blockContent: { __type: "String" },
+    blockTitle: { __type: "String" },
+    blockTitleTag: { __type: "String" },
+    description: { __type: "String" },
+    fieldGroupName: { __type: "String" },
+    layoutColorOption: { __type: "String" },
+    manageSpacing: { __type: "String" },
+  },
+  Service_Fieldlayoutoptions_FlexibleLayouts_CareersSection: {
+    __typename: { __type: "String!" },
+    fieldGroupName: { __type: "String" },
+    positionsList: {
+      __type:
+        "[Service_Fieldlayoutoptions_FlexibleLayouts_CareersSection_positionsList]",
+    },
+  },
+  Service_Fieldlayoutoptions_FlexibleLayouts_CareersSection_positionsList: {
+    __typename: { __type: "String!" },
+    fieldGroupName: { __type: "String" },
+    positionDescription: { __type: "String" },
+    positionTitle: { __type: "String" },
+  },
+  Service_Fieldlayoutoptions_FlexibleLayouts_ChooseUsSection: {
+    __typename: { __type: "String!" },
+    chooseUsPoints: {
+      __type:
+        "[Service_Fieldlayoutoptions_FlexibleLayouts_ChooseUsSection_chooseUsPoints]",
+    },
+    fieldGroupName: { __type: "String" },
+    heading: { __type: "String" },
+    headingTag: { __type: "String" },
+    image: { __type: "MediaItem" },
+    layoutColorOption: { __type: "String" },
+    manageSpacing: { __type: "String" },
+  },
+  Service_Fieldlayoutoptions_FlexibleLayouts_ChooseUsSection_chooseUsPoints: {
+    __typename: { __type: "String!" },
+    content: { __type: "String" },
+    fieldGroupName: { __type: "String" },
+    heading: { __type: "String" },
+    icon: { __type: "String" },
+  },
+  Service_Fieldlayoutoptions_FlexibleLayouts_ContactSection: {
+    __typename: { __type: "String!" },
+    description: { __type: "String" },
+    fieldGroupName: { __type: "String" },
+    heading: { __type: "String" },
+    headingTag: { __type: "String" },
+    image: { __type: "MediaItem" },
+  },
+  Service_Fieldlayoutoptions_FlexibleLayouts_ContentWithImage: {
+    __typename: { __type: "String!" },
+    backgroundOptions: {
+      __type:
+        "Service_Fieldlayoutoptions_FlexibleLayouts_ContentWithImage_BackgroundOptions",
+    },
+    content: { __type: "String" },
+    fieldGroupName: { __type: "String" },
+    heading: { __type: "String" },
+    headingTag: { __type: "String" },
+    image: { __type: "MediaItem" },
+    imagePosition: { __type: "String" },
+  },
+  Service_Fieldlayoutoptions_FlexibleLayouts_ContentWithImage_BackgroundOptions:
+    {
+      __typename: { __type: "String!" },
+      backgroundImage: { __type: "MediaItem" },
+      backgroundType: { __type: "String" },
+      color: { __type: "String" },
+      fieldGroupName: { __type: "String" },
+      gradient: { __type: "String" },
+    },
+  Service_Fieldlayoutoptions_FlexibleLayouts_ContentWithSidebar: {
+    __typename: { __type: "String!" },
+    blockContent: { __type: "String" },
+    fieldGroupName: { __type: "String" },
+    layoutColorOption: { __type: "String" },
+    manageSpacing: { __type: "String" },
+  },
+  Service_Fieldlayoutoptions_FlexibleLayouts_Expertise: {
+    __typename: { __type: "String!" },
+    ctaButton: { __type: "AcfLink" },
+    ctaDescription: { __type: "String" },
+    ctaHeading: { __type: "String" },
+    ctaHeadingTag: { __type: "String" },
+    ctaIcon: { __type: "MediaItem" },
+    ctaPhoneNumber: { __type: "String" },
+    description: { __type: "String" },
+    displayCta: { __type: "String" },
+    expertiseList: {
+      __type:
+        "[Service_Fieldlayoutoptions_FlexibleLayouts_Expertise_expertiseList]",
+    },
+    fieldGroupName: { __type: "String" },
+    heading: { __type: "String" },
+    headingTag: { __type: "String" },
+    layoutColorOption: { __type: "String" },
+    manageSpacing: { __type: "String" },
+  },
+  Service_Fieldlayoutoptions_FlexibleLayouts_Expertise_expertiseList: {
+    __typename: { __type: "String!" },
+    fieldGroupName: { __type: "String" },
+    icon: { __type: "String" },
+    title: { __type: "String" },
+  },
+  Service_Fieldlayoutoptions_FlexibleLayouts_FullWidthCta: {
+    __typename: { __type: "String!" },
+    buttons: {
+      __type:
+        "[Service_Fieldlayoutoptions_FlexibleLayouts_FullWidthCta_buttons]",
+    },
+    description: { __type: "String" },
+    fieldGroupName: { __type: "String" },
+    heading: { __type: "String" },
+    headingTag: { __type: "String" },
+    image: { __type: "MediaItem" },
+  },
+  Service_Fieldlayoutoptions_FlexibleLayouts_FullWidthCta_buttons: {
+    __typename: { __type: "String!" },
+    buttonIcon: { __type: "String" },
+    fieldGroupName: { __type: "String" },
+    link: { __type: "AcfLink" },
+  },
+  Service_Fieldlayoutoptions_FlexibleLayouts_HeroSection: {
+    __typename: { __type: "String!" },
+    buttons: {
+      __type:
+        "[Service_Fieldlayoutoptions_FlexibleLayouts_HeroSection_buttons]",
+    },
+    description: { __type: "String" },
+    fieldGroupName: { __type: "String" },
+    heading: { __type: "String" },
+    headingTag: { __type: "String" },
+    image: { __type: "MediaItem" },
+    layoutColorOption: { __type: "String" },
+    manageSpacing: { __type: "String" },
+  },
+  Service_Fieldlayoutoptions_FlexibleLayouts_HeroSection_buttons: {
+    __typename: { __type: "String!" },
+    fieldGroupName: { __type: "String" },
+    link: { __type: "AcfLink" },
+  },
+  Service_Fieldlayoutoptions_FlexibleLayouts_InnerBannerSection: {
+    __typename: { __type: "String!" },
+    buttons: {
+      __type:
+        "[Service_Fieldlayoutoptions_FlexibleLayouts_InnerBannerSection_buttons]",
+    },
+    description: { __type: "String" },
+    fieldGroupName: { __type: "String" },
+    heading: { __type: "String" },
+    headingTag: { __type: "String" },
+    image: { __type: "MediaItem" },
+    overlayColor: { __type: "String" },
+  },
+  Service_Fieldlayoutoptions_FlexibleLayouts_InnerBannerSection_buttons: {
+    __typename: { __type: "String!" },
+    fieldGroupName: { __type: "String" },
+    link: { __type: "AcfLink" },
+  },
+  Service_Fieldlayoutoptions_FlexibleLayouts_IntroSection: {
+    __typename: { __type: "String!" },
+    description: { __type: "String" },
+    fieldGroupName: { __type: "String" },
+    heading: { __type: "String" },
+    headingTag: { __type: "String" },
+    image: { __type: "MediaItem" },
+    introPoints: {
+      __type:
+        "[Service_Fieldlayoutoptions_FlexibleLayouts_IntroSection_introPoints]",
+    },
+    introPointsShowHide: { __type: "String" },
+    layoutColorOption: { __type: "String" },
+    manageSpacing: { __type: "String" },
+  },
+  Service_Fieldlayoutoptions_FlexibleLayouts_IntroSection_introPoints: {
+    __typename: { __type: "String!" },
+    fieldGroupName: { __type: "String" },
+    heading: { __type: "String" },
+    icon: { __type: "String" },
+  },
+  Service_Fieldlayoutoptions_FlexibleLayouts_OffersSection: {
+    __typename: { __type: "String!" },
+    fieldGroupName: { __type: "String" },
+    layoutColorOption: { __type: "String" },
+    manageSpacing: { __type: "String" },
+    offers: {
+      __type:
+        "[Service_Fieldlayoutoptions_FlexibleLayouts_OffersSection_offers]",
+    },
+  },
+  Service_Fieldlayoutoptions_FlexibleLayouts_OffersSection_offers: {
+    __typename: { __type: "String!" },
+    content: { __type: "String" },
+    fieldGroupName: { __type: "String" },
+    heading: { __type: "String" },
+    image: { __type: "MediaItem" },
+  },
+  Service_Fieldlayoutoptions_FlexibleLayouts_Portfolio: {
+    __typename: { __type: "String!" },
+    description: { __type: "String" },
+    fieldGroupName: { __type: "String" },
+    heading: { __type: "String" },
+    headingTag: { __type: "String" },
+    layoutColorOption: { __type: "String" },
+    manageSpacing: { __type: "String" },
+    portfolioList: {
+      __type:
+        "[Service_Fieldlayoutoptions_FlexibleLayouts_Portfolio_PortfolioList]",
+    },
+  },
+  Service_Fieldlayoutoptions_FlexibleLayouts_Portfolio_PortfolioList: {
+    __typename: { __type: "String!" },
+    $on: {
+      __type:
+        "$Service_Fieldlayoutoptions_FlexibleLayouts_Portfolio_PortfolioList!",
+    },
+  },
+  Service_Fieldlayoutoptions_FlexibleLayouts_RelatedProjects: {
+    __typename: { __type: "String!" },
+    fieldGroupName: { __type: "String" },
+    heading: { __type: "String" },
+    headingTag: { __type: "String" },
+    layoutColorOption: { __type: "String" },
+    manageSpacing: { __type: "String" },
+    projects: { __type: "[PortfolioCategory]" },
+  },
+  Service_Fieldlayoutoptions_FlexibleLayouts_ServicesBannerSection: {
+    __typename: { __type: "String!" },
+    description: { __type: "String" },
+    fieldGroupName: { __type: "String" },
+    gradient: { __type: "String" },
+    heading: { __type: "String" },
+    headingTag: { __type: "String" },
+    image: { __type: "MediaItem" },
+    serviceBannerButton: { __type: "AcfLink" },
+  },
+  Service_Fieldlayoutoptions_FlexibleLayouts_ServicesSection: {
+    __typename: { __type: "String!" },
+    description: { __type: "String" },
+    fieldGroupName: { __type: "String" },
+    heading: { __type: "String" },
+    headingTag: { __type: "String" },
+    layoutColorOption: { __type: "String" },
+    manageSpacing: { __type: "String" },
+    services: {
+      __type:
+        "[Service_Fieldlayoutoptions_FlexibleLayouts_ServicesSection_services]",
+    },
+  },
+  Service_Fieldlayoutoptions_FlexibleLayouts_ServicesSection_services: {
+    __typename: { __type: "String!" },
+    content: { __type: "String" },
+    fieldGroupName: { __type: "String" },
+    heading: { __type: "String" },
+    image: { __type: "String" },
+    link: { __type: "AcfLink" },
   },
   Settings: {
     __typename: { __type: "String!" },
@@ -7469,6 +7955,22 @@ export const generatedSchema = {
     clientMutationId: { __type: "String" },
     post: { __type: "Post" },
   },
+  UpdateServiceInput: {
+    clientMutationId: { __type: "String" },
+    content: { __type: "String" },
+    date: { __type: "String" },
+    id: { __type: "ID!" },
+    menuOrder: { __type: "Int" },
+    password: { __type: "String" },
+    slug: { __type: "String" },
+    status: { __type: "PostStatusEnum" },
+    title: { __type: "String" },
+  },
+  UpdateServicePayload: {
+    __typename: { __type: "String!" },
+    clientMutationId: { __type: "String" },
+    service: { __type: "Service" },
+  },
   UpdateSettingsInput: {
     clientMutationId: { __type: "String" },
     discussionSettingsDefaultCommentStatus: { __type: "String" },
@@ -7908,6 +8410,10 @@ export const generatedSchema = {
       __type: "CreatePostFormatPayload",
       __args: { input: "CreatePostFormatInput!" },
     },
+    createService: {
+      __type: "CreateServicePayload",
+      __args: { input: "CreateServiceInput!" },
+    },
     createTag: {
       __type: "CreateTagPayload",
       __args: { input: "CreateTagInput!" },
@@ -7947,6 +8453,10 @@ export const generatedSchema = {
     deletePostFormat: {
       __type: "DeletePostFormatPayload",
       __args: { input: "DeletePostFormatInput!" },
+    },
+    deleteService: {
+      __type: "DeleteServicePayload",
+      __args: { input: "DeleteServiceInput!" },
     },
     deleteTag: {
       __type: "DeleteTagPayload",
@@ -8009,6 +8519,10 @@ export const generatedSchema = {
       __type: "UpdatePostFormatPayload",
       __args: { input: "UpdatePostFormatInput!" },
     },
+    updateService: {
+      __type: "UpdateServicePayload",
+      __args: { input: "UpdateServiceInput!" },
+    },
     updateSettings: {
       __type: "UpdateSettingsPayload",
       __args: { input: "UpdateSettingsInput!" },
@@ -8032,6 +8546,16 @@ export const generatedSchema = {
         first: "Int",
         last: "Int",
         where: "RootQueryToPortfolioConnectionWhereArgs",
+      },
+    },
+    allService: {
+      __type: "RootQueryToServiceConnection",
+      __args: {
+        after: "String",
+        before: "String",
+        first: "Int",
+        last: "Int",
+        where: "RootQueryToServiceConnectionWhereArgs",
       },
     },
     allSettings: { __type: "Settings" },
@@ -8236,6 +8760,14 @@ export const generatedSchema = {
         where: "RootQueryToContentRevisionUnionConnectionWhereArgs",
       },
     },
+    service: {
+      __type: "Service",
+      __args: { asPreview: "Boolean", id: "ID!", idType: "ServiceIdType" },
+    },
+    serviceBy: {
+      __type: "Service",
+      __args: { id: "ID", serviceId: "Int", slug: "String", uri: "String" },
+    },
     tag: { __type: "Tag", __args: { id: "ID!", idType: "TagIdType" } },
     tags: {
       __type: "RootQueryToTagConnection",
@@ -8314,6 +8846,7 @@ export const generatedSchema = {
       "PortfolioCategory",
       "Post",
       "PostFormat",
+      "Service",
       "Tag",
       "User",
     ],
@@ -8324,6 +8857,7 @@ export const generatedSchema = {
       "Portfolio",
       "PortfolioCategory",
       "Post",
+      "Service",
       "Tag",
     ],
     Node: [
@@ -8342,6 +8876,7 @@ export const generatedSchema = {
       "PortfolioCategory",
       "Post",
       "PostFormat",
+      "Service",
       "Tag",
       "Taxonomy",
       "Theme",
@@ -8358,6 +8893,7 @@ export const generatedSchema = {
       "PortfolioCategory",
       "Post",
       "PostFormat",
+      "Service",
       "Tag",
       "User",
     ],
@@ -8371,22 +8907,23 @@ export const generatedSchema = {
       "Template_SinglePostNoSeparators",
     ],
     EnqueuedAsset: ["EnqueuedScript", "EnqueuedStylesheet"],
-    ContentNode: ["MediaItem", "Page", "Portfolio", "Post"],
+    ContentNode: ["MediaItem", "Page", "Portfolio", "Post", "Service"],
     HierarchicalContentNode: ["MediaItem", "Page"],
     NodeWithAuthor: ["MediaItem", "Page", "Post"],
     NodeWithComments: ["MediaItem", "Page", "Post"],
-    NodeWithTemplate: ["MediaItem", "Page", "Portfolio", "Post"],
-    NodeWithTitle: ["MediaItem", "Page", "Portfolio", "Post"],
+    NodeWithTemplate: ["MediaItem", "Page", "Portfolio", "Post", "Service"],
+    NodeWithTitle: ["MediaItem", "Page", "Portfolio", "Post", "Service"],
     MenuItemObjectUnion: [
       "Category",
       "Page",
       "Portfolio",
       "PortfolioCategory",
       "Post",
+      "Service",
       "Tag",
     ],
-    NodeWithContentEditor: ["Page", "Portfolio", "Post"],
-    NodeWithFeaturedImage: ["Page", "Portfolio", "Post"],
+    NodeWithContentEditor: ["Page", "Portfolio", "Post", "Service"],
+    NodeWithFeaturedImage: ["Page", "Portfolio", "Post", "Service"],
     NodeWithPageAttributes: ["Page"],
     NodeWithRevisions: ["Page", "Post"],
     AcfFieldGroup: [
@@ -8417,6 +8954,33 @@ export const generatedSchema = {
       "Page_Fieldlayoutoptions_FlexibleLayouts_ServicesBannerSection",
       "Page_Fieldlayoutoptions_FlexibleLayouts_ServicesSection",
       "Page_Fieldlayoutoptions_FlexibleLayouts_ServicesSection_services",
+      "Service_Fieldlayoutoptions",
+      "Service_Fieldlayoutoptions_FlexibleLayouts_AboutInfo",
+      "Service_Fieldlayoutoptions_FlexibleLayouts_CareersSection",
+      "Service_Fieldlayoutoptions_FlexibleLayouts_CareersSection_positionsList",
+      "Service_Fieldlayoutoptions_FlexibleLayouts_ChooseUsSection",
+      "Service_Fieldlayoutoptions_FlexibleLayouts_ChooseUsSection_chooseUsPoints",
+      "Service_Fieldlayoutoptions_FlexibleLayouts_ContactSection",
+      "Service_Fieldlayoutoptions_FlexibleLayouts_ContentWithImage",
+      "Service_Fieldlayoutoptions_FlexibleLayouts_ContentWithImage_BackgroundOptions",
+      "Service_Fieldlayoutoptions_FlexibleLayouts_ContentWithSidebar",
+      "Service_Fieldlayoutoptions_FlexibleLayouts_Expertise",
+      "Service_Fieldlayoutoptions_FlexibleLayouts_Expertise_expertiseList",
+      "Service_Fieldlayoutoptions_FlexibleLayouts_FullWidthCta",
+      "Service_Fieldlayoutoptions_FlexibleLayouts_FullWidthCta_buttons",
+      "Service_Fieldlayoutoptions_FlexibleLayouts_HeroSection",
+      "Service_Fieldlayoutoptions_FlexibleLayouts_HeroSection_buttons",
+      "Service_Fieldlayoutoptions_FlexibleLayouts_InnerBannerSection",
+      "Service_Fieldlayoutoptions_FlexibleLayouts_InnerBannerSection_buttons",
+      "Service_Fieldlayoutoptions_FlexibleLayouts_IntroSection",
+      "Service_Fieldlayoutoptions_FlexibleLayouts_IntroSection_introPoints",
+      "Service_Fieldlayoutoptions_FlexibleLayouts_OffersSection",
+      "Service_Fieldlayoutoptions_FlexibleLayouts_OffersSection_offers",
+      "Service_Fieldlayoutoptions_FlexibleLayouts_Portfolio",
+      "Service_Fieldlayoutoptions_FlexibleLayouts_RelatedProjects",
+      "Service_Fieldlayoutoptions_FlexibleLayouts_ServicesBannerSection",
+      "Service_Fieldlayoutoptions_FlexibleLayouts_ServicesSection",
+      "Service_Fieldlayoutoptions_FlexibleLayouts_ServicesSection_services",
       "ThemeGeneralSettings_Generalthemesettings",
       "ThemeGeneralSettings_Generalthemesettings_socialMediaList",
     ],
@@ -8443,6 +9007,27 @@ export const generatedSchema = {
     ],
     NodeWithExcerpt: ["Post"],
     NodeWithTrackbacks: ["Post"],
+    Service_Fieldlayoutoptions_FlexibleLayouts: [
+      "Service_Fieldlayoutoptions_FlexibleLayouts_AboutInfo",
+      "Service_Fieldlayoutoptions_FlexibleLayouts_CareersSection",
+      "Service_Fieldlayoutoptions_FlexibleLayouts_ChooseUsSection",
+      "Service_Fieldlayoutoptions_FlexibleLayouts_ContactSection",
+      "Service_Fieldlayoutoptions_FlexibleLayouts_ContentWithImage",
+      "Service_Fieldlayoutoptions_FlexibleLayouts_ContentWithSidebar",
+      "Service_Fieldlayoutoptions_FlexibleLayouts_Expertise",
+      "Service_Fieldlayoutoptions_FlexibleLayouts_FullWidthCta",
+      "Service_Fieldlayoutoptions_FlexibleLayouts_HeroSection",
+      "Service_Fieldlayoutoptions_FlexibleLayouts_InnerBannerSection",
+      "Service_Fieldlayoutoptions_FlexibleLayouts_IntroSection",
+      "Service_Fieldlayoutoptions_FlexibleLayouts_OffersSection",
+      "Service_Fieldlayoutoptions_FlexibleLayouts_Portfolio",
+      "Service_Fieldlayoutoptions_FlexibleLayouts_RelatedProjects",
+      "Service_Fieldlayoutoptions_FlexibleLayouts_ServicesBannerSection",
+      "Service_Fieldlayoutoptions_FlexibleLayouts_ServicesSection",
+    ],
+    Service_Fieldlayoutoptions_FlexibleLayouts_Portfolio_PortfolioList: [
+      "Portfolio",
+    ],
   },
 } as const;
 
@@ -8478,6 +9063,33 @@ export interface AcfFieldGroup {
     | "Page_Fieldlayoutoptions_FlexibleLayouts_ServicesBannerSection"
     | "Page_Fieldlayoutoptions_FlexibleLayouts_ServicesSection"
     | "Page_Fieldlayoutoptions_FlexibleLayouts_ServicesSection_services"
+    | "Service_Fieldlayoutoptions"
+    | "Service_Fieldlayoutoptions_FlexibleLayouts_AboutInfo"
+    | "Service_Fieldlayoutoptions_FlexibleLayouts_CareersSection"
+    | "Service_Fieldlayoutoptions_FlexibleLayouts_CareersSection_positionsList"
+    | "Service_Fieldlayoutoptions_FlexibleLayouts_ChooseUsSection"
+    | "Service_Fieldlayoutoptions_FlexibleLayouts_ChooseUsSection_chooseUsPoints"
+    | "Service_Fieldlayoutoptions_FlexibleLayouts_ContactSection"
+    | "Service_Fieldlayoutoptions_FlexibleLayouts_ContentWithImage"
+    | "Service_Fieldlayoutoptions_FlexibleLayouts_ContentWithImage_BackgroundOptions"
+    | "Service_Fieldlayoutoptions_FlexibleLayouts_ContentWithSidebar"
+    | "Service_Fieldlayoutoptions_FlexibleLayouts_Expertise"
+    | "Service_Fieldlayoutoptions_FlexibleLayouts_Expertise_expertiseList"
+    | "Service_Fieldlayoutoptions_FlexibleLayouts_FullWidthCta"
+    | "Service_Fieldlayoutoptions_FlexibleLayouts_FullWidthCta_buttons"
+    | "Service_Fieldlayoutoptions_FlexibleLayouts_HeroSection"
+    | "Service_Fieldlayoutoptions_FlexibleLayouts_HeroSection_buttons"
+    | "Service_Fieldlayoutoptions_FlexibleLayouts_InnerBannerSection"
+    | "Service_Fieldlayoutoptions_FlexibleLayouts_InnerBannerSection_buttons"
+    | "Service_Fieldlayoutoptions_FlexibleLayouts_IntroSection"
+    | "Service_Fieldlayoutoptions_FlexibleLayouts_IntroSection_introPoints"
+    | "Service_Fieldlayoutoptions_FlexibleLayouts_OffersSection"
+    | "Service_Fieldlayoutoptions_FlexibleLayouts_OffersSection_offers"
+    | "Service_Fieldlayoutoptions_FlexibleLayouts_Portfolio"
+    | "Service_Fieldlayoutoptions_FlexibleLayouts_RelatedProjects"
+    | "Service_Fieldlayoutoptions_FlexibleLayouts_ServicesBannerSection"
+    | "Service_Fieldlayoutoptions_FlexibleLayouts_ServicesSection"
+    | "Service_Fieldlayoutoptions_FlexibleLayouts_ServicesSection_services"
     | "ThemeGeneralSettings_Generalthemesettings"
     | "ThemeGeneralSettings_Generalthemesettings_socialMediaList";
   /**
@@ -9304,7 +9916,7 @@ export interface ConditionalTags {
  * Nodes used to manage content
  */
 export interface ContentNode {
-  __typename?: "MediaItem" | "Page" | "Portfolio" | "Post";
+  __typename?: "MediaItem" | "Page" | "Portfolio" | "Post" | "Service";
   /**
    * @deprecated Deprecated in favor of using Next.js pages
    */
@@ -9952,6 +10564,21 @@ export interface CreatePostPayload {
 }
 
 /**
+ * The payload for the createService mutation
+ */
+export interface CreateServicePayload {
+  __typename?: "CreateServicePayload";
+  /**
+   * If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions.
+   */
+  clientMutationId?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The Post object mutation type.
+   */
+  service?: Maybe<Service>;
+}
+
+/**
  * The payload for the createTag mutation
  */
 export interface CreateTagPayload {
@@ -9996,6 +10623,7 @@ export interface DatabaseIdentifier {
     | "PortfolioCategory"
     | "Post"
     | "PostFormat"
+    | "Service"
     | "Tag"
     | "User";
   /**
@@ -10166,6 +10794,25 @@ export interface DeletePostPayload {
    * The object before it was deleted
    */
   post?: Maybe<Post>;
+}
+
+/**
+ * The payload for the deleteService mutation
+ */
+export interface DeleteServicePayload {
+  __typename?: "DeleteServicePayload";
+  /**
+   * If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions.
+   */
+  clientMutationId?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The ID of the deleted object
+   */
+  deletedId?: Maybe<ScalarsEnums["ID"]>;
+  /**
+   * The object before it was deleted
+   */
+  service?: Maybe<Service>;
 }
 
 /**
@@ -11239,6 +11886,7 @@ export interface MenuItemLinkable {
     | "Portfolio"
     | "PortfolioCategory"
     | "Post"
+    | "Service"
     | "Tag";
   /**
    * The unique resource identifier path
@@ -11265,6 +11913,7 @@ export interface MenuItemObjectUnion {
     | "Portfolio"
     | "PortfolioCategory"
     | "Post"
+    | "Service"
     | "Tag";
   $on: $MenuItemObjectUnion;
 }
@@ -11379,6 +12028,7 @@ export interface Node {
     | "PortfolioCategory"
     | "Post"
     | "PostFormat"
+    | "Service"
     | "Tag"
     | "Taxonomy"
     | "Theme"
@@ -11442,7 +12092,7 @@ export interface NodeWithComments {
  * A node that supports the content editor
  */
 export interface NodeWithContentEditor {
-  __typename?: "Page" | "Portfolio" | "Post";
+  __typename?: "Page" | "Portfolio" | "Post" | "Service";
   /**
    * The content of the post.
    */
@@ -11476,7 +12126,7 @@ export interface NodeWithExcerpt {
  * A node that can have a featured image set
  */
 export interface NodeWithFeaturedImage {
-  __typename?: "Page" | "Portfolio" | "Post";
+  __typename?: "Page" | "Portfolio" | "Post" | "Service";
   /**
    * @deprecated Deprecated in favor of using Next.js pages
    */
@@ -11689,7 +12339,7 @@ export interface NodeWithRevisionsToContentNodeConnectionEdge {
  * A node that can have a template associated with it
  */
 export interface NodeWithTemplate {
-  __typename?: "MediaItem" | "Page" | "Portfolio" | "Post";
+  __typename?: "MediaItem" | "Page" | "Portfolio" | "Post" | "Service";
   /**
    * The template assigned to the node
    */
@@ -11701,7 +12351,7 @@ export interface NodeWithTemplate {
  * A node that NodeWith a title
  */
 export interface NodeWithTitle {
-  __typename?: "MediaItem" | "Page" | "Portfolio" | "Post";
+  __typename?: "MediaItem" | "Page" | "Portfolio" | "Post" | "Service";
   /**
    * The title of the post. This is currently just the raw title. An amendment to support rendered title needs to be made.
    */
@@ -14814,6 +15464,40 @@ export interface RootQueryToPostFormatConnectionEdge {
 }
 
 /**
+ * Connection between the RootQuery type and the Service type
+ */
+export interface RootQueryToServiceConnection {
+  __typename?: "RootQueryToServiceConnection";
+  /**
+   * Edges for the RootQueryToServiceConnection connection
+   */
+  edges?: Maybe<Array<Maybe<RootQueryToServiceConnectionEdge>>>;
+  /**
+   * The nodes of the connection, without the edges
+   */
+  nodes?: Maybe<Array<Maybe<Service>>>;
+  /**
+   * Information about pagination in a connection.
+   */
+  pageInfo?: Maybe<WPPageInfo>;
+}
+
+/**
+ * An edge in a connection
+ */
+export interface RootQueryToServiceConnectionEdge {
+  __typename?: "RootQueryToServiceConnectionEdge";
+  /**
+   * A cursor for use in pagination
+   */
+  cursor?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The item at the end of the edge
+   */
+  node?: Maybe<Service>;
+}
+
+/**
  * Connection between the RootQuery type and the tag type
  */
 export interface RootQueryToTagConnection {
@@ -15030,6 +15714,690 @@ export interface SendPasswordResetEmailPayload {
    * The user that the password reset email was sent to
    */
   user?: Maybe<User>;
+}
+
+/**
+ * The Service type
+ */
+export interface Service {
+  __typename?: "Service";
+  /**
+   * @deprecated Deprecated in favor of using Next.js pages
+   */
+  conditionalTags?: Maybe<ConditionalTags>;
+  /**
+   * The content of the post.
+   */
+  content: (args?: {
+    /**
+     * Format of the field output
+     */
+    format?: Maybe<PostObjectFieldFormatEnum>;
+  }) => Maybe<ScalarsEnums["String"]>;
+  /**
+   * Connection between the ContentNode type and the ContentType type
+   */
+  contentType?: Maybe<ContentNodeToContentTypeConnectionEdge>;
+  /**
+   * The name of the Content Type the node belongs to
+   */
+  contentTypeName: ScalarsEnums["String"];
+  /**
+   * The unique resource identifier path
+   */
+  databaseId: ScalarsEnums["Int"];
+  /**
+   * Post publishing date.
+   */
+  date?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The publishing date set in GMT.
+   */
+  dateGmt?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The desired slug of the post
+   */
+  desiredSlug?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * If a user has edited the node within the past 15 seconds, this will return the user that last edited. Null if the edit lock doesn&#039;t exist or is greater than 15 seconds
+   */
+  editingLockedBy?: Maybe<ContentNodeToEditLockConnectionEdge>;
+  /**
+   * The RSS enclosure for the object
+   */
+  enclosure?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * Connection between the ContentNode type and the EnqueuedScript type
+   */
+  enqueuedScripts: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars["String"]>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars["String"]>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars["Int"]>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars["Int"]>;
+  }) => Maybe<ContentNodeToEnqueuedScriptConnection>;
+  /**
+   * Connection between the ContentNode type and the EnqueuedStylesheet type
+   */
+  enqueuedStylesheets: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars["String"]>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars["String"]>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars["Int"]>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars["Int"]>;
+  }) => Maybe<ContentNodeToEnqueuedStylesheetConnection>;
+  /**
+   * Connection between the NodeWithFeaturedImage type and the MediaItem type
+   */
+  featuredImage?: Maybe<NodeWithFeaturedImageToMediaItemConnectionEdge>;
+  /**
+   * The database identifier for the featured image node assigned to the content node
+   */
+  featuredImageDatabaseId?: Maybe<ScalarsEnums["Int"]>;
+  /**
+   * Globally unique ID of the featured image assigned to the node
+   */
+  featuredImageId?: Maybe<ScalarsEnums["ID"]>;
+  /**
+   * Added to the GraphQL Schema because the ACF Field Group &quot;Layout Options&quot; was set to Show in GraphQL.
+   */
+  fieldLayoutOptions?: Maybe<Service_Fieldlayoutoptions>;
+  /**
+   * The global unique identifier for this post. This currently matches the value stored in WP_Post-&gt;guid and the guid column in the &quot;post_objects&quot; database table.
+   */
+  guid?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The globally unique identifier of the services object.
+   */
+  id: ScalarsEnums["ID"];
+  /**
+   * Whether the node is a Content Node
+   */
+  isContentNode: ScalarsEnums["Boolean"];
+  /**
+   * Whether the object is a node in the preview state
+   */
+  isPreview?: Maybe<ScalarsEnums["Boolean"]>;
+  /**
+   * Whether the object is restricted from the current viewer
+   */
+  isRestricted?: Maybe<ScalarsEnums["Boolean"]>;
+  /**
+   * Whether the node is a Term
+   */
+  isTermNode: ScalarsEnums["Boolean"];
+  /**
+   * The user that most recently edited the node
+   */
+  lastEditedBy?: Maybe<ContentNodeToEditLastConnectionEdge>;
+  /**
+   * The permalink of the post
+   */
+  link?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The local modified time for a post. If a post was recently updated the modified field will change to match the corresponding time.
+   */
+  modified?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The GMT modified time for a post. If a post was recently updated the modified field will change to match the corresponding time in GMT.
+   */
+  modifiedGmt?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * Connection between the Service type and the Service type
+   */
+  preview?: Maybe<ServiceToPreviewConnectionEdge>;
+  /**
+   * The database id of the preview node
+   */
+  previewRevisionDatabaseId?: Maybe<ScalarsEnums["Int"]>;
+  /**
+   * Whether the object is a node in the preview state
+   */
+  previewRevisionId?: Maybe<ScalarsEnums["ID"]>;
+  /**
+   * The id field matches the WP_Post-&gt;ID field.
+   * @deprecated Deprecated in favor of the databaseId field
+   */
+  serviceId: ScalarsEnums["Int"];
+  /**
+   * The uri slug for the post. This is equivalent to the WP_Post-&gt;post_name field and the post_name column in the database for the &quot;post_objects&quot; table.
+   */
+  slug?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The current status of the object
+   */
+  status?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The template assigned to a node of content
+   */
+  template?: Maybe<ContentTemplate>;
+  templates?: Maybe<Array<Maybe<ScalarsEnums["String"]>>>;
+  /**
+   * The title of the post. This is currently just the raw title. An amendment to support rendered title needs to be made.
+   */
+  title: (args?: {
+    /**
+     * Format of the field output
+     */
+    format?: Maybe<PostObjectFieldFormatEnum>;
+  }) => Maybe<ScalarsEnums["String"]>;
+  /**
+   * The unique resource identifier path
+   */
+  uri?: Maybe<ScalarsEnums["String"]>;
+}
+
+/**
+ * Connection between the Service type and the Service type
+ */
+export interface ServiceToPreviewConnectionEdge {
+  __typename?: "ServiceToPreviewConnectionEdge";
+  /**
+   * The node of the connection, without the edges
+   */
+  node?: Maybe<Service>;
+}
+
+/**
+ * Field Group
+ */
+export interface Service_Fieldlayoutoptions {
+  __typename?: "Service_Fieldlayoutoptions";
+  /**
+   * The name of the ACF Field Group
+   */
+  fieldGroupName?: Maybe<ScalarsEnums["String"]>;
+  flexibleLayouts?: Maybe<
+    Array<Maybe<Service_Fieldlayoutoptions_FlexibleLayouts>>
+  >;
+}
+
+export interface Service_Fieldlayoutoptions_FlexibleLayouts {
+  __typename?:
+    | "Service_Fieldlayoutoptions_FlexibleLayouts_AboutInfo"
+    | "Service_Fieldlayoutoptions_FlexibleLayouts_CareersSection"
+    | "Service_Fieldlayoutoptions_FlexibleLayouts_ChooseUsSection"
+    | "Service_Fieldlayoutoptions_FlexibleLayouts_ContactSection"
+    | "Service_Fieldlayoutoptions_FlexibleLayouts_ContentWithImage"
+    | "Service_Fieldlayoutoptions_FlexibleLayouts_ContentWithSidebar"
+    | "Service_Fieldlayoutoptions_FlexibleLayouts_Expertise"
+    | "Service_Fieldlayoutoptions_FlexibleLayouts_FullWidthCta"
+    | "Service_Fieldlayoutoptions_FlexibleLayouts_HeroSection"
+    | "Service_Fieldlayoutoptions_FlexibleLayouts_InnerBannerSection"
+    | "Service_Fieldlayoutoptions_FlexibleLayouts_IntroSection"
+    | "Service_Fieldlayoutoptions_FlexibleLayouts_OffersSection"
+    | "Service_Fieldlayoutoptions_FlexibleLayouts_Portfolio"
+    | "Service_Fieldlayoutoptions_FlexibleLayouts_RelatedProjects"
+    | "Service_Fieldlayoutoptions_FlexibleLayouts_ServicesBannerSection"
+    | "Service_Fieldlayoutoptions_FlexibleLayouts_ServicesSection";
+  $on: $Service_Fieldlayoutoptions_FlexibleLayouts;
+}
+
+/**
+ * Group within the flex field
+ */
+export interface Service_Fieldlayoutoptions_FlexibleLayouts_AboutInfo {
+  __typename?: "Service_Fieldlayoutoptions_FlexibleLayouts_AboutInfo";
+  blockBackgroundImage?: Maybe<MediaItem>;
+  blockContent?: Maybe<ScalarsEnums["String"]>;
+  blockTitle?: Maybe<ScalarsEnums["String"]>;
+  blockTitleTag?: Maybe<ScalarsEnums["String"]>;
+  description?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The name of the ACF Field Group
+   */
+  fieldGroupName?: Maybe<ScalarsEnums["String"]>;
+  layoutColorOption?: Maybe<ScalarsEnums["String"]>;
+  manageSpacing?: Maybe<ScalarsEnums["String"]>;
+}
+
+/**
+ * Group within the flex field
+ */
+export interface Service_Fieldlayoutoptions_FlexibleLayouts_CareersSection {
+  __typename?: "Service_Fieldlayoutoptions_FlexibleLayouts_CareersSection";
+  /**
+   * The name of the ACF Field Group
+   */
+  fieldGroupName?: Maybe<ScalarsEnums["String"]>;
+  positionsList?: Maybe<
+    Array<
+      Maybe<Service_Fieldlayoutoptions_FlexibleLayouts_CareersSection_positionsList>
+    >
+  >;
+}
+
+/**
+ * Field Group
+ */
+export interface Service_Fieldlayoutoptions_FlexibleLayouts_CareersSection_positionsList {
+  __typename?: "Service_Fieldlayoutoptions_FlexibleLayouts_CareersSection_positionsList";
+  /**
+   * The name of the ACF Field Group
+   */
+  fieldGroupName?: Maybe<ScalarsEnums["String"]>;
+  positionDescription?: Maybe<ScalarsEnums["String"]>;
+  positionTitle?: Maybe<ScalarsEnums["String"]>;
+}
+
+/**
+ * Group within the flex field
+ */
+export interface Service_Fieldlayoutoptions_FlexibleLayouts_ChooseUsSection {
+  __typename?: "Service_Fieldlayoutoptions_FlexibleLayouts_ChooseUsSection";
+  chooseUsPoints?: Maybe<
+    Array<
+      Maybe<Service_Fieldlayoutoptions_FlexibleLayouts_ChooseUsSection_chooseUsPoints>
+    >
+  >;
+  /**
+   * The name of the ACF Field Group
+   */
+  fieldGroupName?: Maybe<ScalarsEnums["String"]>;
+  heading?: Maybe<ScalarsEnums["String"]>;
+  headingTag?: Maybe<ScalarsEnums["String"]>;
+  image?: Maybe<MediaItem>;
+  layoutColorOption?: Maybe<ScalarsEnums["String"]>;
+  manageSpacing?: Maybe<ScalarsEnums["String"]>;
+}
+
+/**
+ * Field Group
+ */
+export interface Service_Fieldlayoutoptions_FlexibleLayouts_ChooseUsSection_chooseUsPoints {
+  __typename?: "Service_Fieldlayoutoptions_FlexibleLayouts_ChooseUsSection_chooseUsPoints";
+  content?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The name of the ACF Field Group
+   */
+  fieldGroupName?: Maybe<ScalarsEnums["String"]>;
+  heading?: Maybe<ScalarsEnums["String"]>;
+  icon?: Maybe<ScalarsEnums["String"]>;
+}
+
+/**
+ * Group within the flex field
+ */
+export interface Service_Fieldlayoutoptions_FlexibleLayouts_ContactSection {
+  __typename?: "Service_Fieldlayoutoptions_FlexibleLayouts_ContactSection";
+  description?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The name of the ACF Field Group
+   */
+  fieldGroupName?: Maybe<ScalarsEnums["String"]>;
+  heading?: Maybe<ScalarsEnums["String"]>;
+  headingTag?: Maybe<ScalarsEnums["String"]>;
+  image?: Maybe<MediaItem>;
+}
+
+/**
+ * Group within the flex field
+ */
+export interface Service_Fieldlayoutoptions_FlexibleLayouts_ContentWithImage {
+  __typename?: "Service_Fieldlayoutoptions_FlexibleLayouts_ContentWithImage";
+  backgroundOptions?: Maybe<Service_Fieldlayoutoptions_FlexibleLayouts_ContentWithImage_BackgroundOptions>;
+  content?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The name of the ACF Field Group
+   */
+  fieldGroupName?: Maybe<ScalarsEnums["String"]>;
+  heading?: Maybe<ScalarsEnums["String"]>;
+  headingTag?: Maybe<ScalarsEnums["String"]>;
+  image?: Maybe<MediaItem>;
+  imagePosition?: Maybe<ScalarsEnums["String"]>;
+}
+
+/**
+ * Field Group
+ */
+export interface Service_Fieldlayoutoptions_FlexibleLayouts_ContentWithImage_BackgroundOptions {
+  __typename?: "Service_Fieldlayoutoptions_FlexibleLayouts_ContentWithImage_BackgroundOptions";
+  backgroundImage?: Maybe<MediaItem>;
+  backgroundType?: Maybe<ScalarsEnums["String"]>;
+  color?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The name of the ACF Field Group
+   */
+  fieldGroupName?: Maybe<ScalarsEnums["String"]>;
+  gradient?: Maybe<ScalarsEnums["String"]>;
+}
+
+/**
+ * Group within the flex field
+ */
+export interface Service_Fieldlayoutoptions_FlexibleLayouts_ContentWithSidebar {
+  __typename?: "Service_Fieldlayoutoptions_FlexibleLayouts_ContentWithSidebar";
+  blockContent?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The name of the ACF Field Group
+   */
+  fieldGroupName?: Maybe<ScalarsEnums["String"]>;
+  layoutColorOption?: Maybe<ScalarsEnums["String"]>;
+  manageSpacing?: Maybe<ScalarsEnums["String"]>;
+}
+
+/**
+ * Group within the flex field
+ */
+export interface Service_Fieldlayoutoptions_FlexibleLayouts_Expertise {
+  __typename?: "Service_Fieldlayoutoptions_FlexibleLayouts_Expertise";
+  ctaButton?: Maybe<AcfLink>;
+  ctaDescription?: Maybe<ScalarsEnums["String"]>;
+  ctaHeading?: Maybe<ScalarsEnums["String"]>;
+  ctaHeadingTag?: Maybe<ScalarsEnums["String"]>;
+  ctaIcon?: Maybe<MediaItem>;
+  ctaPhoneNumber?: Maybe<ScalarsEnums["String"]>;
+  description?: Maybe<ScalarsEnums["String"]>;
+  displayCta?: Maybe<ScalarsEnums["String"]>;
+  expertiseList?: Maybe<
+    Array<
+      Maybe<Service_Fieldlayoutoptions_FlexibleLayouts_Expertise_expertiseList>
+    >
+  >;
+  /**
+   * The name of the ACF Field Group
+   */
+  fieldGroupName?: Maybe<ScalarsEnums["String"]>;
+  heading?: Maybe<ScalarsEnums["String"]>;
+  headingTag?: Maybe<ScalarsEnums["String"]>;
+  layoutColorOption?: Maybe<ScalarsEnums["String"]>;
+  manageSpacing?: Maybe<ScalarsEnums["String"]>;
+}
+
+/**
+ * Field Group
+ */
+export interface Service_Fieldlayoutoptions_FlexibleLayouts_Expertise_expertiseList {
+  __typename?: "Service_Fieldlayoutoptions_FlexibleLayouts_Expertise_expertiseList";
+  /**
+   * The name of the ACF Field Group
+   */
+  fieldGroupName?: Maybe<ScalarsEnums["String"]>;
+  icon?: Maybe<ScalarsEnums["String"]>;
+  title?: Maybe<ScalarsEnums["String"]>;
+}
+
+/**
+ * Group within the flex field
+ */
+export interface Service_Fieldlayoutoptions_FlexibleLayouts_FullWidthCta {
+  __typename?: "Service_Fieldlayoutoptions_FlexibleLayouts_FullWidthCta";
+  buttons?: Maybe<
+    Array<
+      Maybe<Service_Fieldlayoutoptions_FlexibleLayouts_FullWidthCta_buttons>
+    >
+  >;
+  description?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The name of the ACF Field Group
+   */
+  fieldGroupName?: Maybe<ScalarsEnums["String"]>;
+  heading?: Maybe<ScalarsEnums["String"]>;
+  headingTag?: Maybe<ScalarsEnums["String"]>;
+  image?: Maybe<MediaItem>;
+}
+
+/**
+ * Field Group
+ */
+export interface Service_Fieldlayoutoptions_FlexibleLayouts_FullWidthCta_buttons {
+  __typename?: "Service_Fieldlayoutoptions_FlexibleLayouts_FullWidthCta_buttons";
+  buttonIcon?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The name of the ACF Field Group
+   */
+  fieldGroupName?: Maybe<ScalarsEnums["String"]>;
+  link?: Maybe<AcfLink>;
+}
+
+/**
+ * Group within the flex field
+ */
+export interface Service_Fieldlayoutoptions_FlexibleLayouts_HeroSection {
+  __typename?: "Service_Fieldlayoutoptions_FlexibleLayouts_HeroSection";
+  buttons?: Maybe<
+    Array<Maybe<Service_Fieldlayoutoptions_FlexibleLayouts_HeroSection_buttons>>
+  >;
+  description?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The name of the ACF Field Group
+   */
+  fieldGroupName?: Maybe<ScalarsEnums["String"]>;
+  heading?: Maybe<ScalarsEnums["String"]>;
+  headingTag?: Maybe<ScalarsEnums["String"]>;
+  image?: Maybe<MediaItem>;
+  layoutColorOption?: Maybe<ScalarsEnums["String"]>;
+  manageSpacing?: Maybe<ScalarsEnums["String"]>;
+}
+
+/**
+ * Field Group
+ */
+export interface Service_Fieldlayoutoptions_FlexibleLayouts_HeroSection_buttons {
+  __typename?: "Service_Fieldlayoutoptions_FlexibleLayouts_HeroSection_buttons";
+  /**
+   * The name of the ACF Field Group
+   */
+  fieldGroupName?: Maybe<ScalarsEnums["String"]>;
+  link?: Maybe<AcfLink>;
+}
+
+/**
+ * Group within the flex field
+ */
+export interface Service_Fieldlayoutoptions_FlexibleLayouts_InnerBannerSection {
+  __typename?: "Service_Fieldlayoutoptions_FlexibleLayouts_InnerBannerSection";
+  buttons?: Maybe<
+    Array<
+      Maybe<Service_Fieldlayoutoptions_FlexibleLayouts_InnerBannerSection_buttons>
+    >
+  >;
+  description?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The name of the ACF Field Group
+   */
+  fieldGroupName?: Maybe<ScalarsEnums["String"]>;
+  heading?: Maybe<ScalarsEnums["String"]>;
+  headingTag?: Maybe<ScalarsEnums["String"]>;
+  image?: Maybe<MediaItem>;
+  overlayColor?: Maybe<ScalarsEnums["String"]>;
+}
+
+/**
+ * Field Group
+ */
+export interface Service_Fieldlayoutoptions_FlexibleLayouts_InnerBannerSection_buttons {
+  __typename?: "Service_Fieldlayoutoptions_FlexibleLayouts_InnerBannerSection_buttons";
+  /**
+   * The name of the ACF Field Group
+   */
+  fieldGroupName?: Maybe<ScalarsEnums["String"]>;
+  link?: Maybe<AcfLink>;
+}
+
+/**
+ * Group within the flex field
+ */
+export interface Service_Fieldlayoutoptions_FlexibleLayouts_IntroSection {
+  __typename?: "Service_Fieldlayoutoptions_FlexibleLayouts_IntroSection";
+  description?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The name of the ACF Field Group
+   */
+  fieldGroupName?: Maybe<ScalarsEnums["String"]>;
+  heading?: Maybe<ScalarsEnums["String"]>;
+  headingTag?: Maybe<ScalarsEnums["String"]>;
+  image?: Maybe<MediaItem>;
+  introPoints?: Maybe<
+    Array<
+      Maybe<Service_Fieldlayoutoptions_FlexibleLayouts_IntroSection_introPoints>
+    >
+  >;
+  introPointsShowHide?: Maybe<ScalarsEnums["String"]>;
+  layoutColorOption?: Maybe<ScalarsEnums["String"]>;
+  manageSpacing?: Maybe<ScalarsEnums["String"]>;
+}
+
+/**
+ * Field Group
+ */
+export interface Service_Fieldlayoutoptions_FlexibleLayouts_IntroSection_introPoints {
+  __typename?: "Service_Fieldlayoutoptions_FlexibleLayouts_IntroSection_introPoints";
+  /**
+   * The name of the ACF Field Group
+   */
+  fieldGroupName?: Maybe<ScalarsEnums["String"]>;
+  heading?: Maybe<ScalarsEnums["String"]>;
+  icon?: Maybe<ScalarsEnums["String"]>;
+}
+
+/**
+ * Group within the flex field
+ */
+export interface Service_Fieldlayoutoptions_FlexibleLayouts_OffersSection {
+  __typename?: "Service_Fieldlayoutoptions_FlexibleLayouts_OffersSection";
+  /**
+   * The name of the ACF Field Group
+   */
+  fieldGroupName?: Maybe<ScalarsEnums["String"]>;
+  layoutColorOption?: Maybe<ScalarsEnums["String"]>;
+  manageSpacing?: Maybe<ScalarsEnums["String"]>;
+  offers?: Maybe<
+    Array<
+      Maybe<Service_Fieldlayoutoptions_FlexibleLayouts_OffersSection_offers>
+    >
+  >;
+}
+
+/**
+ * Field Group
+ */
+export interface Service_Fieldlayoutoptions_FlexibleLayouts_OffersSection_offers {
+  __typename?: "Service_Fieldlayoutoptions_FlexibleLayouts_OffersSection_offers";
+  content?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The name of the ACF Field Group
+   */
+  fieldGroupName?: Maybe<ScalarsEnums["String"]>;
+  heading?: Maybe<ScalarsEnums["String"]>;
+  image?: Maybe<MediaItem>;
+}
+
+/**
+ * Group within the flex field
+ */
+export interface Service_Fieldlayoutoptions_FlexibleLayouts_Portfolio {
+  __typename?: "Service_Fieldlayoutoptions_FlexibleLayouts_Portfolio";
+  description?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The name of the ACF Field Group
+   */
+  fieldGroupName?: Maybe<ScalarsEnums["String"]>;
+  heading?: Maybe<ScalarsEnums["String"]>;
+  headingTag?: Maybe<ScalarsEnums["String"]>;
+  layoutColorOption?: Maybe<ScalarsEnums["String"]>;
+  manageSpacing?: Maybe<ScalarsEnums["String"]>;
+  portfolioList?: Maybe<
+    Array<
+      Maybe<Service_Fieldlayoutoptions_FlexibleLayouts_Portfolio_PortfolioList>
+    >
+  >;
+}
+
+export interface Service_Fieldlayoutoptions_FlexibleLayouts_Portfolio_PortfolioList {
+  __typename?: "Portfolio";
+  $on: $Service_Fieldlayoutoptions_FlexibleLayouts_Portfolio_PortfolioList;
+}
+
+/**
+ * Group within the flex field
+ */
+export interface Service_Fieldlayoutoptions_FlexibleLayouts_RelatedProjects {
+  __typename?: "Service_Fieldlayoutoptions_FlexibleLayouts_RelatedProjects";
+  /**
+   * The name of the ACF Field Group
+   */
+  fieldGroupName?: Maybe<ScalarsEnums["String"]>;
+  heading?: Maybe<ScalarsEnums["String"]>;
+  headingTag?: Maybe<ScalarsEnums["String"]>;
+  layoutColorOption?: Maybe<ScalarsEnums["String"]>;
+  manageSpacing?: Maybe<ScalarsEnums["String"]>;
+  projects?: Maybe<Array<Maybe<PortfolioCategory>>>;
+}
+
+/**
+ * Group within the flex field
+ */
+export interface Service_Fieldlayoutoptions_FlexibleLayouts_ServicesBannerSection {
+  __typename?: "Service_Fieldlayoutoptions_FlexibleLayouts_ServicesBannerSection";
+  description?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The name of the ACF Field Group
+   */
+  fieldGroupName?: Maybe<ScalarsEnums["String"]>;
+  gradient?: Maybe<ScalarsEnums["String"]>;
+  heading?: Maybe<ScalarsEnums["String"]>;
+  headingTag?: Maybe<ScalarsEnums["String"]>;
+  image?: Maybe<MediaItem>;
+  serviceBannerButton?: Maybe<AcfLink>;
+}
+
+/**
+ * Group within the flex field
+ */
+export interface Service_Fieldlayoutoptions_FlexibleLayouts_ServicesSection {
+  __typename?: "Service_Fieldlayoutoptions_FlexibleLayouts_ServicesSection";
+  description?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The name of the ACF Field Group
+   */
+  fieldGroupName?: Maybe<ScalarsEnums["String"]>;
+  heading?: Maybe<ScalarsEnums["String"]>;
+  headingTag?: Maybe<ScalarsEnums["String"]>;
+  layoutColorOption?: Maybe<ScalarsEnums["String"]>;
+  manageSpacing?: Maybe<ScalarsEnums["String"]>;
+  services?: Maybe<
+    Array<
+      Maybe<Service_Fieldlayoutoptions_FlexibleLayouts_ServicesSection_services>
+    >
+  >;
+}
+
+/**
+ * Field Group
+ */
+export interface Service_Fieldlayoutoptions_FlexibleLayouts_ServicesSection_services {
+  __typename?: "Service_Fieldlayoutoptions_FlexibleLayouts_ServicesSection_services";
+  content?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The name of the ACF Field Group
+   */
+  fieldGroupName?: Maybe<ScalarsEnums["String"]>;
+  heading?: Maybe<ScalarsEnums["String"]>;
+  image?: Maybe<ScalarsEnums["String"]>;
+  link?: Maybe<AcfLink>;
 }
 
 /**
@@ -15823,6 +17191,7 @@ export interface UniformResourceIdentifiable {
     | "PortfolioCategory"
     | "Post"
     | "PostFormat"
+    | "Service"
     | "Tag"
     | "User";
   /**
@@ -15971,6 +17340,21 @@ export interface UpdatePostPayload {
    * The Post object mutation type.
    */
   post?: Maybe<Post>;
+}
+
+/**
+ * The payload for the updateService mutation
+ */
+export interface UpdateServicePayload {
+  __typename?: "UpdateServicePayload";
+  /**
+   * If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions.
+   */
+  clientMutationId?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The Post object mutation type.
+   */
+  service?: Maybe<Service>;
 }
 
 /**
@@ -16704,6 +18088,9 @@ export interface Mutation {
   createPostFormat: (args: {
     input: CreatePostFormatInput;
   }) => Maybe<CreatePostFormatPayload>;
+  createService: (args: {
+    input: CreateServiceInput;
+  }) => Maybe<CreateServicePayload>;
   createTag: (args: { input: CreateTagInput }) => Maybe<CreateTagPayload>;
   createUser: (args: { input: CreateUserInput }) => Maybe<CreateUserPayload>;
   deleteCategory: (args: {
@@ -16726,6 +18113,9 @@ export interface Mutation {
   deletePostFormat: (args: {
     input: DeletePostFormatInput;
   }) => Maybe<DeletePostFormatPayload>;
+  deleteService: (args: {
+    input: DeleteServiceInput;
+  }) => Maybe<DeleteServicePayload>;
   deleteTag: (args: { input: DeleteTagInput }) => Maybe<DeleteTagPayload>;
   deleteUser: (args: { input: DeleteUserInput }) => Maybe<DeleteUserPayload>;
   generateAuthorizationCode: (args: {
@@ -16766,6 +18156,9 @@ export interface Mutation {
   updatePostFormat: (args: {
     input: UpdatePostFormatInput;
   }) => Maybe<UpdatePostFormatPayload>;
+  updateService: (args: {
+    input: UpdateServiceInput;
+  }) => Maybe<UpdateServicePayload>;
   updateSettings: (args: {
     input: UpdateSettingsInput;
   }) => Maybe<UpdateSettingsPayload>;
@@ -16782,6 +18175,13 @@ export interface Query {
     last?: Maybe<Scalars["Int"]>;
     where?: Maybe<RootQueryToPortfolioConnectionWhereArgs>;
   }) => Maybe<RootQueryToPortfolioConnection>;
+  allService: (args?: {
+    after?: Maybe<Scalars["String"]>;
+    before?: Maybe<Scalars["String"]>;
+    first?: Maybe<Scalars["Int"]>;
+    last?: Maybe<Scalars["Int"]>;
+    where?: Maybe<RootQueryToServiceConnectionWhereArgs>;
+  }) => Maybe<RootQueryToServiceConnection>;
   allSettings?: Maybe<Settings>;
   categories: (args?: {
     after?: Maybe<Scalars["String"]>;
@@ -16966,6 +18366,17 @@ export interface Query {
     last?: Maybe<Scalars["Int"]>;
     where?: Maybe<RootQueryToContentRevisionUnionConnectionWhereArgs>;
   }) => Maybe<RootQueryToContentRevisionUnionConnection>;
+  service: (args: {
+    asPreview?: Maybe<Scalars["Boolean"]>;
+    id: Scalars["ID"];
+    idType?: Maybe<ServiceIdType>;
+  }) => Maybe<Service>;
+  serviceBy: (args?: {
+    id?: Maybe<Scalars["ID"]>;
+    serviceId?: Maybe<Scalars["Int"]>;
+    slug?: Maybe<Scalars["String"]>;
+    uri?: Maybe<Scalars["String"]>;
+  }) => Maybe<Service>;
   tag: (args: { id: Scalars["ID"]; idType?: Maybe<TagIdType> }) => Maybe<Tag>;
   tags: (args?: {
     after?: Maybe<Scalars["String"]>;
@@ -17072,6 +18483,7 @@ export interface SchemaObjectTypes {
   CreatePortfolioPayload: CreatePortfolioPayload;
   CreatePostFormatPayload: CreatePostFormatPayload;
   CreatePostPayload: CreatePostPayload;
+  CreateServicePayload: CreateServicePayload;
   CreateTagPayload: CreateTagPayload;
   CreateUserPayload: CreateUserPayload;
   DefaultTemplate: DefaultTemplate;
@@ -17083,6 +18495,7 @@ export interface SchemaObjectTypes {
   DeletePortfolioPayload: DeletePortfolioPayload;
   DeletePostFormatPayload: DeletePostFormatPayload;
   DeletePostPayload: DeletePostPayload;
+  DeleteServicePayload: DeleteServicePayload;
   DeleteTagPayload: DeleteTagPayload;
   DeleteUserPayload: DeleteUserPayload;
   DiscussionSettings: DiscussionSettings;
@@ -17217,6 +18630,8 @@ export interface SchemaObjectTypes {
   RootQueryToPostConnectionEdge: RootQueryToPostConnectionEdge;
   RootQueryToPostFormatConnection: RootQueryToPostFormatConnection;
   RootQueryToPostFormatConnectionEdge: RootQueryToPostFormatConnectionEdge;
+  RootQueryToServiceConnection: RootQueryToServiceConnection;
+  RootQueryToServiceConnectionEdge: RootQueryToServiceConnectionEdge;
   RootQueryToTagConnection: RootQueryToTagConnection;
   RootQueryToTagConnectionEdge: RootQueryToTagConnectionEdge;
   RootQueryToTaxonomyConnection: RootQueryToTaxonomyConnection;
@@ -17230,6 +18645,35 @@ export interface SchemaObjectTypes {
   RootQueryToUserRoleConnection: RootQueryToUserRoleConnection;
   RootQueryToUserRoleConnectionEdge: RootQueryToUserRoleConnectionEdge;
   SendPasswordResetEmailPayload: SendPasswordResetEmailPayload;
+  Service: Service;
+  ServiceToPreviewConnectionEdge: ServiceToPreviewConnectionEdge;
+  Service_Fieldlayoutoptions: Service_Fieldlayoutoptions;
+  Service_Fieldlayoutoptions_FlexibleLayouts_AboutInfo: Service_Fieldlayoutoptions_FlexibleLayouts_AboutInfo;
+  Service_Fieldlayoutoptions_FlexibleLayouts_CareersSection: Service_Fieldlayoutoptions_FlexibleLayouts_CareersSection;
+  Service_Fieldlayoutoptions_FlexibleLayouts_CareersSection_positionsList: Service_Fieldlayoutoptions_FlexibleLayouts_CareersSection_positionsList;
+  Service_Fieldlayoutoptions_FlexibleLayouts_ChooseUsSection: Service_Fieldlayoutoptions_FlexibleLayouts_ChooseUsSection;
+  Service_Fieldlayoutoptions_FlexibleLayouts_ChooseUsSection_chooseUsPoints: Service_Fieldlayoutoptions_FlexibleLayouts_ChooseUsSection_chooseUsPoints;
+  Service_Fieldlayoutoptions_FlexibleLayouts_ContactSection: Service_Fieldlayoutoptions_FlexibleLayouts_ContactSection;
+  Service_Fieldlayoutoptions_FlexibleLayouts_ContentWithImage: Service_Fieldlayoutoptions_FlexibleLayouts_ContentWithImage;
+  Service_Fieldlayoutoptions_FlexibleLayouts_ContentWithImage_BackgroundOptions: Service_Fieldlayoutoptions_FlexibleLayouts_ContentWithImage_BackgroundOptions;
+  Service_Fieldlayoutoptions_FlexibleLayouts_ContentWithSidebar: Service_Fieldlayoutoptions_FlexibleLayouts_ContentWithSidebar;
+  Service_Fieldlayoutoptions_FlexibleLayouts_Expertise: Service_Fieldlayoutoptions_FlexibleLayouts_Expertise;
+  Service_Fieldlayoutoptions_FlexibleLayouts_Expertise_expertiseList: Service_Fieldlayoutoptions_FlexibleLayouts_Expertise_expertiseList;
+  Service_Fieldlayoutoptions_FlexibleLayouts_FullWidthCta: Service_Fieldlayoutoptions_FlexibleLayouts_FullWidthCta;
+  Service_Fieldlayoutoptions_FlexibleLayouts_FullWidthCta_buttons: Service_Fieldlayoutoptions_FlexibleLayouts_FullWidthCta_buttons;
+  Service_Fieldlayoutoptions_FlexibleLayouts_HeroSection: Service_Fieldlayoutoptions_FlexibleLayouts_HeroSection;
+  Service_Fieldlayoutoptions_FlexibleLayouts_HeroSection_buttons: Service_Fieldlayoutoptions_FlexibleLayouts_HeroSection_buttons;
+  Service_Fieldlayoutoptions_FlexibleLayouts_InnerBannerSection: Service_Fieldlayoutoptions_FlexibleLayouts_InnerBannerSection;
+  Service_Fieldlayoutoptions_FlexibleLayouts_InnerBannerSection_buttons: Service_Fieldlayoutoptions_FlexibleLayouts_InnerBannerSection_buttons;
+  Service_Fieldlayoutoptions_FlexibleLayouts_IntroSection: Service_Fieldlayoutoptions_FlexibleLayouts_IntroSection;
+  Service_Fieldlayoutoptions_FlexibleLayouts_IntroSection_introPoints: Service_Fieldlayoutoptions_FlexibleLayouts_IntroSection_introPoints;
+  Service_Fieldlayoutoptions_FlexibleLayouts_OffersSection: Service_Fieldlayoutoptions_FlexibleLayouts_OffersSection;
+  Service_Fieldlayoutoptions_FlexibleLayouts_OffersSection_offers: Service_Fieldlayoutoptions_FlexibleLayouts_OffersSection_offers;
+  Service_Fieldlayoutoptions_FlexibleLayouts_Portfolio: Service_Fieldlayoutoptions_FlexibleLayouts_Portfolio;
+  Service_Fieldlayoutoptions_FlexibleLayouts_RelatedProjects: Service_Fieldlayoutoptions_FlexibleLayouts_RelatedProjects;
+  Service_Fieldlayoutoptions_FlexibleLayouts_ServicesBannerSection: Service_Fieldlayoutoptions_FlexibleLayouts_ServicesBannerSection;
+  Service_Fieldlayoutoptions_FlexibleLayouts_ServicesSection: Service_Fieldlayoutoptions_FlexibleLayouts_ServicesSection;
+  Service_Fieldlayoutoptions_FlexibleLayouts_ServicesSection_services: Service_Fieldlayoutoptions_FlexibleLayouts_ServicesSection_services;
   Settings: Settings;
   Subscription: Subscription;
   Tag: Tag;
@@ -17261,6 +18705,7 @@ export interface SchemaObjectTypes {
   UpdatePortfolioPayload: UpdatePortfolioPayload;
   UpdatePostFormatPayload: UpdatePostFormatPayload;
   UpdatePostPayload: UpdatePostPayload;
+  UpdateServicePayload: UpdateServicePayload;
   UpdateSettingsPayload: UpdateSettingsPayload;
   UpdateTagPayload: UpdateTagPayload;
   UpdateUserPayload: UpdateUserPayload;
@@ -17327,6 +18772,7 @@ export type SchemaObjectTypesNames =
   | "CreatePortfolioPayload"
   | "CreatePostFormatPayload"
   | "CreatePostPayload"
+  | "CreateServicePayload"
   | "CreateTagPayload"
   | "CreateUserPayload"
   | "DefaultTemplate"
@@ -17338,6 +18784,7 @@ export type SchemaObjectTypesNames =
   | "DeletePortfolioPayload"
   | "DeletePostFormatPayload"
   | "DeletePostPayload"
+  | "DeleteServicePayload"
   | "DeleteTagPayload"
   | "DeleteUserPayload"
   | "DiscussionSettings"
@@ -17472,6 +18919,8 @@ export type SchemaObjectTypesNames =
   | "RootQueryToPostConnectionEdge"
   | "RootQueryToPostFormatConnection"
   | "RootQueryToPostFormatConnectionEdge"
+  | "RootQueryToServiceConnection"
+  | "RootQueryToServiceConnectionEdge"
   | "RootQueryToTagConnection"
   | "RootQueryToTagConnectionEdge"
   | "RootQueryToTaxonomyConnection"
@@ -17485,6 +18934,35 @@ export type SchemaObjectTypesNames =
   | "RootQueryToUserRoleConnection"
   | "RootQueryToUserRoleConnectionEdge"
   | "SendPasswordResetEmailPayload"
+  | "Service"
+  | "ServiceToPreviewConnectionEdge"
+  | "Service_Fieldlayoutoptions"
+  | "Service_Fieldlayoutoptions_FlexibleLayouts_AboutInfo"
+  | "Service_Fieldlayoutoptions_FlexibleLayouts_CareersSection"
+  | "Service_Fieldlayoutoptions_FlexibleLayouts_CareersSection_positionsList"
+  | "Service_Fieldlayoutoptions_FlexibleLayouts_ChooseUsSection"
+  | "Service_Fieldlayoutoptions_FlexibleLayouts_ChooseUsSection_chooseUsPoints"
+  | "Service_Fieldlayoutoptions_FlexibleLayouts_ContactSection"
+  | "Service_Fieldlayoutoptions_FlexibleLayouts_ContentWithImage"
+  | "Service_Fieldlayoutoptions_FlexibleLayouts_ContentWithImage_BackgroundOptions"
+  | "Service_Fieldlayoutoptions_FlexibleLayouts_ContentWithSidebar"
+  | "Service_Fieldlayoutoptions_FlexibleLayouts_Expertise"
+  | "Service_Fieldlayoutoptions_FlexibleLayouts_Expertise_expertiseList"
+  | "Service_Fieldlayoutoptions_FlexibleLayouts_FullWidthCta"
+  | "Service_Fieldlayoutoptions_FlexibleLayouts_FullWidthCta_buttons"
+  | "Service_Fieldlayoutoptions_FlexibleLayouts_HeroSection"
+  | "Service_Fieldlayoutoptions_FlexibleLayouts_HeroSection_buttons"
+  | "Service_Fieldlayoutoptions_FlexibleLayouts_InnerBannerSection"
+  | "Service_Fieldlayoutoptions_FlexibleLayouts_InnerBannerSection_buttons"
+  | "Service_Fieldlayoutoptions_FlexibleLayouts_IntroSection"
+  | "Service_Fieldlayoutoptions_FlexibleLayouts_IntroSection_introPoints"
+  | "Service_Fieldlayoutoptions_FlexibleLayouts_OffersSection"
+  | "Service_Fieldlayoutoptions_FlexibleLayouts_OffersSection_offers"
+  | "Service_Fieldlayoutoptions_FlexibleLayouts_Portfolio"
+  | "Service_Fieldlayoutoptions_FlexibleLayouts_RelatedProjects"
+  | "Service_Fieldlayoutoptions_FlexibleLayouts_ServicesBannerSection"
+  | "Service_Fieldlayoutoptions_FlexibleLayouts_ServicesSection"
+  | "Service_Fieldlayoutoptions_FlexibleLayouts_ServicesSection_services"
   | "Settings"
   | "Subscription"
   | "Tag"
@@ -17516,6 +18994,7 @@ export type SchemaObjectTypesNames =
   | "UpdatePortfolioPayload"
   | "UpdatePostFormatPayload"
   | "UpdatePostPayload"
+  | "UpdateServicePayload"
   | "UpdateSettingsPayload"
   | "UpdateTagPayload"
   | "UpdateUserPayload"
@@ -17568,6 +19047,33 @@ export interface $AcfFieldGroup {
   Page_Fieldlayoutoptions_FlexibleLayouts_ServicesBannerSection?: Page_Fieldlayoutoptions_FlexibleLayouts_ServicesBannerSection;
   Page_Fieldlayoutoptions_FlexibleLayouts_ServicesSection?: Page_Fieldlayoutoptions_FlexibleLayouts_ServicesSection;
   Page_Fieldlayoutoptions_FlexibleLayouts_ServicesSection_services?: Page_Fieldlayoutoptions_FlexibleLayouts_ServicesSection_services;
+  Service_Fieldlayoutoptions?: Service_Fieldlayoutoptions;
+  Service_Fieldlayoutoptions_FlexibleLayouts_AboutInfo?: Service_Fieldlayoutoptions_FlexibleLayouts_AboutInfo;
+  Service_Fieldlayoutoptions_FlexibleLayouts_CareersSection?: Service_Fieldlayoutoptions_FlexibleLayouts_CareersSection;
+  Service_Fieldlayoutoptions_FlexibleLayouts_CareersSection_positionsList?: Service_Fieldlayoutoptions_FlexibleLayouts_CareersSection_positionsList;
+  Service_Fieldlayoutoptions_FlexibleLayouts_ChooseUsSection?: Service_Fieldlayoutoptions_FlexibleLayouts_ChooseUsSection;
+  Service_Fieldlayoutoptions_FlexibleLayouts_ChooseUsSection_chooseUsPoints?: Service_Fieldlayoutoptions_FlexibleLayouts_ChooseUsSection_chooseUsPoints;
+  Service_Fieldlayoutoptions_FlexibleLayouts_ContactSection?: Service_Fieldlayoutoptions_FlexibleLayouts_ContactSection;
+  Service_Fieldlayoutoptions_FlexibleLayouts_ContentWithImage?: Service_Fieldlayoutoptions_FlexibleLayouts_ContentWithImage;
+  Service_Fieldlayoutoptions_FlexibleLayouts_ContentWithImage_BackgroundOptions?: Service_Fieldlayoutoptions_FlexibleLayouts_ContentWithImage_BackgroundOptions;
+  Service_Fieldlayoutoptions_FlexibleLayouts_ContentWithSidebar?: Service_Fieldlayoutoptions_FlexibleLayouts_ContentWithSidebar;
+  Service_Fieldlayoutoptions_FlexibleLayouts_Expertise?: Service_Fieldlayoutoptions_FlexibleLayouts_Expertise;
+  Service_Fieldlayoutoptions_FlexibleLayouts_Expertise_expertiseList?: Service_Fieldlayoutoptions_FlexibleLayouts_Expertise_expertiseList;
+  Service_Fieldlayoutoptions_FlexibleLayouts_FullWidthCta?: Service_Fieldlayoutoptions_FlexibleLayouts_FullWidthCta;
+  Service_Fieldlayoutoptions_FlexibleLayouts_FullWidthCta_buttons?: Service_Fieldlayoutoptions_FlexibleLayouts_FullWidthCta_buttons;
+  Service_Fieldlayoutoptions_FlexibleLayouts_HeroSection?: Service_Fieldlayoutoptions_FlexibleLayouts_HeroSection;
+  Service_Fieldlayoutoptions_FlexibleLayouts_HeroSection_buttons?: Service_Fieldlayoutoptions_FlexibleLayouts_HeroSection_buttons;
+  Service_Fieldlayoutoptions_FlexibleLayouts_InnerBannerSection?: Service_Fieldlayoutoptions_FlexibleLayouts_InnerBannerSection;
+  Service_Fieldlayoutoptions_FlexibleLayouts_InnerBannerSection_buttons?: Service_Fieldlayoutoptions_FlexibleLayouts_InnerBannerSection_buttons;
+  Service_Fieldlayoutoptions_FlexibleLayouts_IntroSection?: Service_Fieldlayoutoptions_FlexibleLayouts_IntroSection;
+  Service_Fieldlayoutoptions_FlexibleLayouts_IntroSection_introPoints?: Service_Fieldlayoutoptions_FlexibleLayouts_IntroSection_introPoints;
+  Service_Fieldlayoutoptions_FlexibleLayouts_OffersSection?: Service_Fieldlayoutoptions_FlexibleLayouts_OffersSection;
+  Service_Fieldlayoutoptions_FlexibleLayouts_OffersSection_offers?: Service_Fieldlayoutoptions_FlexibleLayouts_OffersSection_offers;
+  Service_Fieldlayoutoptions_FlexibleLayouts_Portfolio?: Service_Fieldlayoutoptions_FlexibleLayouts_Portfolio;
+  Service_Fieldlayoutoptions_FlexibleLayouts_RelatedProjects?: Service_Fieldlayoutoptions_FlexibleLayouts_RelatedProjects;
+  Service_Fieldlayoutoptions_FlexibleLayouts_ServicesBannerSection?: Service_Fieldlayoutoptions_FlexibleLayouts_ServicesBannerSection;
+  Service_Fieldlayoutoptions_FlexibleLayouts_ServicesSection?: Service_Fieldlayoutoptions_FlexibleLayouts_ServicesSection;
+  Service_Fieldlayoutoptions_FlexibleLayouts_ServicesSection_services?: Service_Fieldlayoutoptions_FlexibleLayouts_ServicesSection_services;
   ThemeGeneralSettings_Generalthemesettings?: ThemeGeneralSettings_Generalthemesettings;
   ThemeGeneralSettings_Generalthemesettings_socialMediaList?: ThemeGeneralSettings_Generalthemesettings_socialMediaList;
 }
@@ -17582,6 +19088,7 @@ export interface $ContentNode {
   Page?: Page;
   Portfolio?: Portfolio;
   Post?: Post;
+  Service?: Service;
 }
 
 export interface $ContentRevisionUnion {
@@ -17608,6 +19115,7 @@ export interface $DatabaseIdentifier {
   PortfolioCategory?: PortfolioCategory;
   Post?: Post;
   PostFormat?: PostFormat;
+  Service?: Service;
   Tag?: Tag;
   User?: User;
 }
@@ -17632,6 +19140,7 @@ export interface $MenuItemLinkable {
   Portfolio?: Portfolio;
   PortfolioCategory?: PortfolioCategory;
   Post?: Post;
+  Service?: Service;
   Tag?: Tag;
 }
 
@@ -17641,6 +19150,7 @@ export interface $MenuItemObjectUnion {
   Portfolio?: Portfolio;
   PortfolioCategory?: PortfolioCategory;
   Post?: Post;
+  Service?: Service;
   Tag?: Tag;
 }
 
@@ -17660,6 +19170,7 @@ export interface $Node {
   PortfolioCategory?: PortfolioCategory;
   Post?: Post;
   PostFormat?: PostFormat;
+  Service?: Service;
   Tag?: Tag;
   Taxonomy?: Taxonomy;
   Theme?: Theme;
@@ -17683,6 +19194,7 @@ export interface $NodeWithContentEditor {
   Page?: Page;
   Portfolio?: Portfolio;
   Post?: Post;
+  Service?: Service;
 }
 
 export interface $NodeWithExcerpt {
@@ -17693,6 +19205,7 @@ export interface $NodeWithFeaturedImage {
   Page?: Page;
   Portfolio?: Portfolio;
   Post?: Post;
+  Service?: Service;
 }
 
 export interface $NodeWithPageAttributes {
@@ -17709,6 +19222,7 @@ export interface $NodeWithTemplate {
   Page?: Page;
   Portfolio?: Portfolio;
   Post?: Post;
+  Service?: Service;
 }
 
 export interface $NodeWithTitle {
@@ -17716,6 +19230,7 @@ export interface $NodeWithTitle {
   Page?: Page;
   Portfolio?: Portfolio;
   Post?: Post;
+  Service?: Service;
 }
 
 export interface $NodeWithTrackbacks {
@@ -17745,6 +19260,29 @@ export interface $Page_Fieldlayoutoptions_FlexibleLayouts_Portfolio_PortfolioLis
   Portfolio?: Portfolio;
 }
 
+export interface $Service_Fieldlayoutoptions_FlexibleLayouts {
+  Service_Fieldlayoutoptions_FlexibleLayouts_AboutInfo?: Service_Fieldlayoutoptions_FlexibleLayouts_AboutInfo;
+  Service_Fieldlayoutoptions_FlexibleLayouts_CareersSection?: Service_Fieldlayoutoptions_FlexibleLayouts_CareersSection;
+  Service_Fieldlayoutoptions_FlexibleLayouts_ChooseUsSection?: Service_Fieldlayoutoptions_FlexibleLayouts_ChooseUsSection;
+  Service_Fieldlayoutoptions_FlexibleLayouts_ContactSection?: Service_Fieldlayoutoptions_FlexibleLayouts_ContactSection;
+  Service_Fieldlayoutoptions_FlexibleLayouts_ContentWithImage?: Service_Fieldlayoutoptions_FlexibleLayouts_ContentWithImage;
+  Service_Fieldlayoutoptions_FlexibleLayouts_ContentWithSidebar?: Service_Fieldlayoutoptions_FlexibleLayouts_ContentWithSidebar;
+  Service_Fieldlayoutoptions_FlexibleLayouts_Expertise?: Service_Fieldlayoutoptions_FlexibleLayouts_Expertise;
+  Service_Fieldlayoutoptions_FlexibleLayouts_FullWidthCta?: Service_Fieldlayoutoptions_FlexibleLayouts_FullWidthCta;
+  Service_Fieldlayoutoptions_FlexibleLayouts_HeroSection?: Service_Fieldlayoutoptions_FlexibleLayouts_HeroSection;
+  Service_Fieldlayoutoptions_FlexibleLayouts_InnerBannerSection?: Service_Fieldlayoutoptions_FlexibleLayouts_InnerBannerSection;
+  Service_Fieldlayoutoptions_FlexibleLayouts_IntroSection?: Service_Fieldlayoutoptions_FlexibleLayouts_IntroSection;
+  Service_Fieldlayoutoptions_FlexibleLayouts_OffersSection?: Service_Fieldlayoutoptions_FlexibleLayouts_OffersSection;
+  Service_Fieldlayoutoptions_FlexibleLayouts_Portfolio?: Service_Fieldlayoutoptions_FlexibleLayouts_Portfolio;
+  Service_Fieldlayoutoptions_FlexibleLayouts_RelatedProjects?: Service_Fieldlayoutoptions_FlexibleLayouts_RelatedProjects;
+  Service_Fieldlayoutoptions_FlexibleLayouts_ServicesBannerSection?: Service_Fieldlayoutoptions_FlexibleLayouts_ServicesBannerSection;
+  Service_Fieldlayoutoptions_FlexibleLayouts_ServicesSection?: Service_Fieldlayoutoptions_FlexibleLayouts_ServicesSection;
+}
+
+export interface $Service_Fieldlayoutoptions_FlexibleLayouts_Portfolio_PortfolioList {
+  Portfolio?: Portfolio;
+}
+
 export interface $TermNode {
   Category?: Category;
   PortfolioCategory?: PortfolioCategory;
@@ -17761,6 +19299,7 @@ export interface $UniformResourceIdentifiable {
   PortfolioCategory?: PortfolioCategory;
   Post?: Post;
   PostFormat?: PostFormat;
+  Service?: Service;
   Tag?: Tag;
   User?: User;
 }
@@ -17810,6 +19349,7 @@ export interface ScalarsEnums extends MakeNullable<Scalars> {
     | undefined;
   PostStatusEnum: PostStatusEnum | undefined;
   RelationEnum: RelationEnum | undefined;
+  ServiceIdType: ServiceIdType | undefined;
   TagIdType: TagIdType | undefined;
   TaxonomyEnum: TaxonomyEnum | undefined;
   TaxonomyIdTypeEnum: TaxonomyIdTypeEnum | undefined;
