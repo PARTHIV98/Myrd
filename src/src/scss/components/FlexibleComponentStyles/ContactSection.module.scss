@@ -1,0 +1,137 @@
+.contactsection{
+    min-height: 100%;
+    margin-top: -77px;
+    padding: 150px 0;
+    background-color: rgb(43,43,43);
+    color:#fff;
+    background-position: center;background-repeat:no-repeat;background-size:cover;
+
+    @media screen and(max-width:768px){
+        padding: 120px 0 0 0 !important;
+    }
+    h1{
+        font-size: 30px;
+    font-weight: 600px;
+    margin: 0;
+    padding: 0;
+    color: #ffffff;text-align:center;
+        &::after{
+            
+                content: "";
+                display: block;
+                width: 100px;
+                height: 6px;
+                background: #ffffff;
+                margin: 20px auto 20px auto;
+            
+        }
+
+        @media screen and(max-width:768px) {
+            font-size: 18px;
+            line-height: 38px;
+            text-align: center;
+        }
+    }
+    p{text-align: center;}
+    .contactsecinner{margin-bottom: 30px;}
+}
+
+.contactInfoBlock{
+    background-color: #fff;
+    .ContactInfoCol{
+        width:33.33%;position: relative;
+
+        @media screen and(max-width:768px){
+            width: 100%;
+        }
+    .contactInfoData{
+        margin: 0;
+        padding: 30px 20px;
+        width: 100%;
+
+        h3{
+            font-size: 18px;
+            color: #2B2B2B;
+            padding: 0;
+            margin: 0 0 20px 0;
+        }
+        ul{
+            margin: 0;
+            padding: 0;
+                li{
+                    padding: 0;
+                    display: inline-block;
+                    width: 100%;margin: 0 0 10px 0;
+                        a{
+                            position: relative;
+                            padding-left: 30px;
+                            display: inline-block;color: #807A7A;
+                            text-decoration: none;
+                                i{
+                                    position: absolute;
+                                    top: 8px;
+                                    left: 0;
+                                }
+                            }
+                    }
+            }
+            .social_media{
+         display: inline-block;margin-top:1.5rem;
+            li 
+            {
+                width: auto;
+                a{width: 50px;
+            height: 36px;
+            border-radius: 5px 0 5px 0;
+            display: inline-block;
+            text-align: center;
+            line-height: 36px;
+            color: #ffffff;padding:0;margin-right:4px;
+        
+                    i{
+                        position: relative;
+                        top: unset;
+                        left: unset;
+                    }
+            }
+            .facebook {
+                background: #4665ac;
+              }
+              .instagram {
+                background: #7646bb;
+              }
+              .linkedin {
+                background: #0077b5;
+              }
+            .twitter{background: #059FF5;}
+            .rss{background: #DC5600;}
+            .googleplus{background: #D74B3A;}
+            .pinterest{background: #C71C1F;}
+        }
+        }
+        }
+
+        .contactMap{
+            height: 100%;
+            @media screen and(max-width:768px){
+                height: 250px;
+             }
+            iframe{
+                position:absolute;
+                height: 100%;width: 100%;left: 0;top: 0;max-width: 100%;
+
+                
+            }
+        }
+    }
+    .contactForm{
+        padding: 30px 20px;
+        
+        h3{
+            font-size: 18px;
+            color: #2B2B2B;
+            padding: 0;
+            margin: 0 0 20px 0;
+        }
+    }
+}
