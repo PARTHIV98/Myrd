@@ -247,7 +247,6 @@ function Header({
                       {link.children.length ? (
                         <span
                           aria-expanded={dropdown ? "true" : "false"}
-<!--                           onClick={() => setDropdown((prev) => !prev)} -->
                         ></span>
                       ) : (
                         ""
