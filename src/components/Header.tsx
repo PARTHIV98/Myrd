@@ -158,6 +158,10 @@ function Header({
   const router = useRouter();
   const [modal,showModal]=useState(false);
   const [formInput,setFormInputs] = useState({});
+  function toggleDropdown(e){
+    e.preventDefault();
+    setDropdown(!dropdown);
+  }
   function toggleModal(e){
     e.preventDefault();
     showModal(!modal);
@@ -236,14 +240,14 @@ function Header({
                       className={`${link.cssClasses} ${
                         link.children.length ? "has-submenu" : ""
                       } ${link.url === router.pathname ? "active" : ""}`} 
-                      onClick={(e) => ln==index+1 ? toggleModal(e): link.children.length ? setDropdown((prev) => !prev) : ""}
+                      onClick={(e) => ln==index+1 ? toggleModal(e): link.children.length ? toggleDropdown(e) : ""}
                     >
                       
                       {link.label}
                       {link.children.length ? (
                         <span
                           aria-expanded={dropdown ? "true" : "false"}
-                          onClick={() => setDropdown((prev) => !prev)}
+<!--                           onClick={() => setDropdown((prev) => !prev)} -->
                         ></span>
                       ) : (
                         ""
