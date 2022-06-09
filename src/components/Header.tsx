@@ -236,7 +236,7 @@ function Header({
                       className={`${link.cssClasses} ${
                         link.children.length ? "has-submenu" : ""
                       } ${link.url === router.pathname ? "active" : ""}`} 
-                      onClick={(e) => ln==index+1 ? toggleModal(e): ""}
+                      onClick={(e) => ln==index+1 ? toggleModal(e): link.children.length ? setDropdown((prev) => !prev) : ""}
                     >
                       
                       {link.label}
