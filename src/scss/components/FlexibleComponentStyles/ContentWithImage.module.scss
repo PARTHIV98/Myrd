@@ -1,0 +1,24 @@
+.whiteBoxMain {
+    width: 66.66%;
+    .contentBoxWrap{padding-right:3rem;
+
+
+        p {
+            img{
+                margin: auto;
+            }
+        }
+      @media screen and (max-width: 767px) {
+         padding-right: 0;padding-bottom:1rem;
+        }}
+    @media screen and (max-width: 767px) {
+      width: 100%;
+    }
+  }
+  .imageCol{
+    width: 33.33%;position: relative;
+    
+    @media screen and (max-width: 767px) {
+      width: 100%;
+    }
+  }
