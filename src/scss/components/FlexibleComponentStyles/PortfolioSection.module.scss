@@ -1,0 +1,82 @@
+@import "scss/variables";
+.portfolioList {
+  .portfolioItem {
+    width: 33.33%;
+    .portfolioItemWrap {
+      margin: 0 0 30px 0;
+      padding: 0;
+      width: 100%;
+      min-height: 345px;
+      max-height: 345px;
+      box-shadow: 0px 0 10px rgba(0, 0, 0, 0.09);
+      position: relative;
+      border-radius: 5px;
+      overflow: hidden;
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: top center;
+      background-attachment: scroll;
+      background-origin: padding-box;
+      background-clip: border-box;
+
+      .portfolioContent {
+        position: absolute;
+        background: rgba(60, 90, 115, 0.83);
+        color: #ffffff;
+        padding: 30px;
+        width: 100%;
+        height: 100%;
+        transform: translateX(-100%);
+        transform-origin: bottom right;
+        transition: transform 0.3s;
+        overflow: hidden;
+        .h4 {
+          color: #ffffff;
+          font-size: 30px;
+          font-weight: 800;
+        }
+        .portfolioCategory {
+          margin: 15px 0 0 0;
+          padding: 0;
+          list-style-type: none;
+          .categorylink {
+            color: #ffffff;
+            display: block;
+            margin: 5px 0 0 0;
+            text-decoration: none;
+            width: 100%;
+          }
+        }
+        .portfolioLink {
+          margin: 0;
+          padding: 0;
+          background: linear-gradient(#48c6ef 0%, #6f86d6 100%);
+          position: absolute;
+          bottom: -90px;
+          right: -80px;
+          color: #ffffff;
+          width: 150px;
+          height: 150px;
+          transform: rotate(-45deg);
+          i {
+            position: absolute;
+            top: 12px;
+            transform: rotate(45deg);
+            right: 56px;
+            font-size: 22px;
+          }
+        }
+      }
+
+      &:hover{
+        .portfolioContent{
+          transform-origin: bottom right;
+    transform: translateX(0%);
+        }
+      }
+    }
+    @media screen and (max-width:768px){
+      width: 100%;
+    }
+  }
+}
